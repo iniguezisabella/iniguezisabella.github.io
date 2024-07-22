@@ -14,10 +14,9 @@
     <h2>Applied Math Student @ UIUC</h2>
     <h4>Computer Science, Statistics, & Game Studies and Design</h4>
 
-    <a href="CS416NarViz.html">CS416 Narrative Visualization</a>
-
+    <a onclick="toNarViz()">CS416 Narrative Visualization</a>
     <script>
-    function myFunction() {
+    function toNarViz() {
         d3.select(id).html = ""
         d3.append("CS416NarViz.html")
     }
