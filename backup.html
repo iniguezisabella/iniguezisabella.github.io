@@ -1,94 +1,119 @@
 <!DOCTYPE html>
-<script src="https://d3js.org/d3.v6.min.js"></script>
+<meta charset="utf-8">
+<style> /* set the CSS */
 
-<style> 
-        .chart rect {fill: steelblue;}
-        #tooltip {
-        	opacity: 0;
-			position: absolute; 
-            text-align: center;
-			width: 60px; 
-            height: 40px; 
-            background: white; 
-            border: 0px;
-            }
+.line {
+  fill: none;
+  stroke: steelblue;
+  stroke-width: 2px;
+}
+
+div.tooltip {
+  position: absolute;
+  text-align: center;
+  width: 60px;
+  height: 28px;
+  padding: 2px;
+  font: 12px sans-serif;
+  background: lightsteelblue;
+  border: 0px;
+  border-radius: 8px;
+  pointer-events: none;
+}
+
 </style>
-   
-<html>
-    <head>
-        <style>
-        h1 {text-align: center;}
-        h2 {text-align: center;}
-        h4 {text-align: center;}
-        p {text-align: center;}
-        div {text-align: center;}
-        </style>
-    </head>
-    
-    <body onload='init()'>
-        <h1>What is the recipe to a best selling video game?</h1>
-        <h4>CS 416 Narrative Visualization by Isabella Iniguez</h4>
-        <p>In this interactive slideshow, TBD </p>
-        <p>Here in this first barplot, we can see the trends in what video game genres tend to sell the most. </p>
-            <p>Hover over each bar to see how the numbers break down based on region!</p>
-            
-        <svg class = "chart" width="300" height="300"></svg>
-        <div id="tooltip"></div>
-        
-        <script> // SCRIPT
-            async function init(){
-                var data = await d3.csv('https://iniguezisabella.github.io/data/genre_sales.csv');
-                document.getElementById("data").innerHTML = data;
+<body>
 
-                var width = 500;
-                var height = 250;
-                
-                var x = d3.scaleBand()
-                .domain(data.map(d => d.Genre))
-                .range([0, width])
-                .padding(0.2);
+<!-- load the d3.js library -->    	
+<script src="https://d3js.org/d3.v6.min.js"></script>
+<script>
 
-                var y = d3.scaleLinear().domain([0,1800]).range([height,0])
-                
-                var margin = 75; // changed from 50
-                
-                var tooltip = d3.select("#tooltip");
+// set the dimensions and margins of the graph
+var margin = {top: 20, right: 20, bottom: 30, left: 50},
+    width = 960 - margin.left - margin.right,
+    height = 500 - margin.top - margin.bottom;
 
-                d3.select(".chart")
-                .attr("width", width + 2*margin)
-                .attr("height", height + 2*margin)
-                .append("g")
-                .attr("transform", "translate("+margin+","+margin+")")
-                .selectAll('rect').data(data).enter().append('rect') //bars
-                .attr("x",function(d,i) {return x(d.Genre);}) 
-                .attr("y",function(d,i) {return y(d.Global_Sales);}) 
-                .attr('width', x.bandwidth())
-                .attr('height',function(d,i) {return height - y(d.Global_Sales);})
-                .attr("fill", "#69b3a2")
-                .on("mouseover", function(d,i) { // tooltip
-                  tooltip.style("opacity", 1)
-                    .style("left", (d3.event.pageX)+"px")
-                    .style("top", (d3.event.pageY)+"рх")
-                    .html("NA_Sales: " + i + " Million"); 
-                 })
-                 .on("mouseout", function() { tooltip.style("opacity", 0) })
+// parse the date / time
+// var parseTime = d3.timeParse("%d-%b-%y");
+// var formatTime = d3.timeFormat("%e %B");
 
-                d3.select("svg").append("g")
-                .attr("transform", "translate("+margin+","+margin+")")
-                .call(d3.axisLeft(y));
+// set the ranges
+var x = d3.scaleBand()
+    .domain(data.map(d => d.Genre))
+    .range([0, width])
+    .padding(0.2);
+var y = d3.scaleLinear().domain([0,1800]).range([height,0])
 
-                d3.select("svg").append("g")
-                .attr("transform", "translate("+margin+","+(height+margin)+")")
-                .call(d3.axisBottom(x))
-                .selectAll("text")  
-                .style("text-anchor", "end")
-                .attr("dx", "-.8em")
-                .attr("dy", ".15em")
-                .attr("transform", "rotate(-65)");
-            }
-        </script>
-    
-          <p>Dataset: <a href="https://www.kaggle.com/datasets/gregorut/videogamesales">Kaggle</a> </p> 
-    </body>
-</html>
+// define the line
+var valueline = d3.line()
+    .x(function(d) { return x(d.date); })
+    .y(function(d) { return y(d.close); });
 
+var div = d3.select("body").append("div")
+    .attr("class", "tooltip")
+    .style("opacity", 0);
+
+// append the svg obgect to the body of the page
+// appends a 'group' element to 'svg'
+// moves the 'group' element to the top left margin
+var svg = d3.select("body").append("svg")
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom)
+  .append("g")
+    .attr("transform",
+          "translate(" + margin.left + "," + margin.top + ")");
+
+// Get the data
+// const data = await d3.csv('https://iniguezisabella.github.io/data/genre_sales.csv');
+d3.csv("https://iniguezisabella.github.io/data/genre_sales.csv").then(function(data) {
+
+  // format the data
+//   data.forEach(function(d) {
+//       d.date = parseTime(d.date);
+//       d.close = +d.close;
+//   });
+
+  // scale the range of the data
+  x.domain(d3.extent(data, function(d) { return d.date; }));
+  y.domain([0, d3.max(data, function(d) { return d.close; })]);
+
+  // add the valueline path.
+  svg.append("path")
+     .data([data])
+     .attr("class", "line")
+     .attr("d", valueline);
+
+  // add the dots with tooltips
+  svg.selectAll("dot")
+     .data(data)
+   .enter().append("circle")
+     .attr("r", 5)
+     .attr("cx", function(d) { return x(d.date); })
+     .attr("cy", function(d) { return y(d.close); })
+     .on("mouseover", function(event,d) {
+       div.transition()
+         .duration(200)
+         .style("opacity", .9);
+       div.html(formatTime(d.date) + "<br/>" + d.close)
+         .style("left", (event.pageX) + "px")
+         .style("top", (event.pageY - 28) + "px");
+       })
+     .on("mouseout", function(d) {
+       div.transition()
+         .duration(500)
+         .style("opacity", 0);
+       });
+
+  // add the X Axis
+  svg.append("g")
+      .attr("transform", "translate(0," + height + ")")
+      .call(d3.axisBottom(x));
+
+  // add the Y Axis
+  svg.append("g")
+      .call(d3.axisLeft(y));
+
+});
+
+</script>
+</body>

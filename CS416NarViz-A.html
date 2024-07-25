@@ -6,7 +6,35 @@
         h4 {text-align: center;}
         p {text-align: center;}
         div {text-align: center;}
+
+        .bar{fill: red;}
+        .highlight{fill: pink}
+        
+        #tooltip{
+            position: absolute;
+            width: 200px;
+            height: auto;
+            padding: 10px;
+            background-color: bisque;
+            -webkit-border-radius: 10px;
+            -moz-border-radius: 10px;
+            border-radius: 10px;
+            -webkit-box-shadow: 4px 4px 10px rgba(0,0,0,0.4);
+            -moz-box-shadow: 4px 4px 10px rgba(0,0,0,0.4);
+            box-shadow: 4px 4px 10px rgba(0,0,0,0.4);
+            pointer-events: none;
+        }
+        #tooltip.hidden{
+            display: none;
+        }
+        #tooltip p{
+            margin: 0;
+            font-family: sans-serif;
+            font-size: 16px;
+            line-height: 20px;
+        }
         </style>
+
     </head>
     <script src="https://d3js.org/d3.v6.min.js"></script>
     <body onload='init()'>
@@ -15,7 +43,14 @@
         <p>In this interactive slideshow, TBD </p>
         <p>Here in this first barplot, we can see the trends in what video game genres tend to sell the most. </p>
             <p>Hover over each bar to see how the numbers break down based on region!</p>
-        <svg width="300" height="300"></svg>
+        
+            <div id="tooltip" class="hidden"> 
+                <p><strong>Bar Value</strong></p>
+                <p><span id="value">100</span>
+                </p>
+            </div>
+
+            <svg width="300" height="300"></svg>
         <!-- <script src="test2.js"></script> -->
         <script>
             async function init(){
@@ -24,8 +59,7 @@
                 var width = 500;
                 var height = 250;
                 var x = d3.scaleBand()
-                .domain(data.map(d => d.Genre))// .domain(['Action', 'Adventure', 'Fighting', 'Misc', 'Platform', 'Puzzle', 'Racing', 'Role-Playing', 'Shooter', 'Simulation', 'Sports','Strategy'])
-                .range([0, width])
+                .domain(data.map(d => d.Genre))
                 .padding(0.2);
 
                 var y = d3.scaleLinear().domain([0,1800]).range([height,0])
@@ -37,11 +71,13 @@
                 .append("g")
                 .attr("transform", "translate("+margin+","+margin+")")
                 .selectAll('rect').data(data).enter().append('rect') //bars
-                .attr("x",function(d,i) {return x(d.Genre);}) // {return x(i);})
-                .attr("y",function(d,i) {return y(d.Global_Sales);}) // {return y(d);})
+                .on("mouseover", onMouseOver)
+                .on("mouseout", onMouseOut)
+                .attr("x",function(d,i) {return x(d.Genre);}) 
+                .attr("y",function(d,i) {return y(d.Global_Sales);})
                 .attr('width', x.bandwidth())
                 .attr('height',function(d,i) {return height - y(d.Global_Sales);})
-                .attr("fill", "#69b3a2")
+                // .attr("fill", "#69b3a2")
 
                 d3.select("svg").append("g")
                 .attr("transform", "translate("+margin+","+margin+")")
@@ -56,6 +92,30 @@
                 .attr("dy", ".15em")
                 .attr("transform", "rotate(-65)");
             }
+
+            function onMouseOver(d,i){ // i is the data
+                //get bar's xy
+                var xPos = parseFloat(d3.select(this).attr('x')) + x.bandwidth() / 2
+                var yPos = parseFloat(d3.select(this).attr('y')) + y / 2 + height/2
+
+                //update tooltip
+                d3.select('#tooltip')
+                    .style('left', xPos + 'px')
+                    .style('top', yPos + 'px')
+                    .select('#value').text("Global Sales: " + i.Global_Sales)
+                d3.select('#tooltip').classed('hidden', false);
+
+                // d3.select(this)
+                //     .attr('class', 'highlight')
+
+            }
+
+            function onMouseOut(d,i){
+                d3.select('#tooltip').classed('hidden', true);
+                //     .attr('class', 'bar')
+            }
+
+
         </script>
 
         <div class="navbar">
