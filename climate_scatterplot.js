@@ -1,5 +1,5 @@
-const data = await d3.csv('https://iniguezisabella.github.io/blob/main/globalTempsData.csv');
-  
+const data = await d3.csv('https://iniguezisabella.github.io/globalTempsData.csv');
+
 const margin = { top: 20, right: 20, bottom: 30, left: 50 },
 width = 800 - margin.left - margin.right,
 height = 500 - margin.top - margin.bottom;
