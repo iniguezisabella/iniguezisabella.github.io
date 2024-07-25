@@ -1,79 +1,46 @@
+
 async function init() {
 
-const data = await d3.csv('https://flunky.github.io/cars2017.csv');
+const data = await d3.csv('https://iniguezisabella.github.io/data/sales.csv');
+// const data =
+//  [{'Genre': 'Action','NA_Sales': 861.77,'EU_Sales': 516.48,'JP_Sales': 158.65,'Other_Sales': 184.92000000000002,'Global_Sales':1722.84},
+//  {'Genre': 'Adventure','NA_Sales': 101.93,'EU_Sales': 63.74,'JP_Sales': 51.99,'Other_Sales': 16.7,'Global_Sales': 234.59},
+//  {'Genre': 'C','NA_Sales': 101.93,'EU_Sales': 63.74,'JP_Sales': 51.99,'Other_Sales': 16.7,'Global_Sales': 234.59},
+//  {'Genre': 'D','NA_Sales': 861.77,'EU_Sales': 516.48,'JP_Sales': 158.65,'Other_Sales': 184.92000000000002,'Global_Sales':1722.84}]
+console.log(data);
 
-var width = 300;
-var height = 300;
+var width = 200;
+var height = 200;
+// var x = d3.scaleBand().domain([0,1,2,3,4,5,6,7,8,9,10,11]).range([0,width]);
+var x = d3.scaleBand()
+.domain(data.map(d => d.Genre))// .domain(['Action', 'Adventure', 'Fighting', 'Misc', 'Platform', 'Puzzle', 'Racing', 'Role-Playing', 'Shooter', 'Simulation', 'Sports','Strategy'])
+.range([0, width])
+.padding(0.2);
+
+var y = d3.scaleLinear().domain([0,1800]).range([height,0])
 var margin = 50;
 
-var x = d3.scaleLog().base(10).domain([10,150]).range([0,200]); 
-var y = d3.scaleLog().base(10).domain([10,150]).range([200,0]);
-
-var xaxis = d3.axisBottom(x).tickValues([10,20,50,100]).tickFormat(d3.format("~s"));
-var yaxis = d3.axisLeft(y).tickValues([10,20,50,100]).tickFormat(d3.format("~s"));
-
 d3.select("svg")
-  .attr("width", width)
-  .attr("height", height)
+  .attr("width", width + 2*margin)
+  .attr("height", height + 2*margin)
   .append("g")
    .attr("transform", "translate("+margin+","+margin+")")
-  .selectAll('circle').data(data).enter().append('circle')
-   .attr("cx",function(d) {return x(d.AverageCityMPG);})
-   .attr("cy",function(d) {return y(d.AverageHighwayMPG);})
-   .attr("r", function(d) {return 2+1*d.EngineCylinders;})
+  .selectAll('rect').data(data).enter().append('rect') //bars
+   .attr("x",function(d,i) {return x(d.Genre);}) // {return x(i);})
+   .attr("y",function(d,i) {return y(d.Global_Sales);}) // {return y(d);})
+   .attr('width', x.bandwidth())
+   .attr('height',function(d,i) {return height - y(d.Global_Sales);})
+   .attr("fill", "#69b3a2")
 
 d3.select("svg").append("g")
   .attr("transform", "translate("+margin+","+margin+")")
-  .call(yaxis);
+  .call(d3.axisLeft(y));
 
 d3.select("svg").append("g")
-  .attr("transform", "translate("+margin+","+(200+margin)+")")
-  .call(xaxis);
+  .attr("transform", "translate("+margin+","+(height+margin)+")")
+  .call(d3.axisBottom(x));
 
 }
-
-// async function init() {
-
-// const data = await d3.csv('https://iniguezisabella.github.io/data/sales.csv');
-// // const data =
-// //  [{'Genre': 'Action','NA_Sales': 861.77,'EU_Sales': 516.48,'JP_Sales': 158.65,'Other_Sales': 184.92000000000002,'Global_Sales':1722.84},
-// //  {'Genre': 'Adventure','NA_Sales': 101.93,'EU_Sales': 63.74,'JP_Sales': 51.99,'Other_Sales': 16.7,'Global_Sales': 234.59},
-// //  {'Genre': 'C','NA_Sales': 101.93,'EU_Sales': 63.74,'JP_Sales': 51.99,'Other_Sales': 16.7,'Global_Sales': 234.59},
-// //  {'Genre': 'D','NA_Sales': 861.77,'EU_Sales': 516.48,'JP_Sales': 158.65,'Other_Sales': 184.92000000000002,'Global_Sales':1722.84}]
-// console.log(data);
-
-// var width = 200;
-// var height = 200;
-// // var x = d3.scaleBand().domain([0,1,2,3,4,5,6,7,8,9,10,11]).range([0,width]);
-// var x = d3.scaleBand()
-// .domain(data.map(d => d.Genre))// .domain(['Action', 'Adventure', 'Fighting', 'Misc', 'Platform', 'Puzzle', 'Racing', 'Role-Playing', 'Shooter', 'Simulation', 'Sports','Strategy'])
-// .range([0, width])
-// .padding(0.2);
-
-// var y = d3.scaleLinear().domain([0,1800]).range([height,0])
-// var margin = 50;
-
-// d3.select("svg")
-//   .attr("width", width + 2*margin)
-//   .attr("height", height + 2*margin)
-//   .append("g")
-//    .attr("transform", "translate("+margin+","+margin+")")
-//   .selectAll('rect').data(data).enter().append('rect') //bars
-//    .attr("x",function(d,i) {return x(d.Genre);}) // {return x(i);})
-//    .attr("y",function(d,i) {return y(d.Global_Sales);}) // {return y(d);})
-//    .attr('width', x.bandwidth())
-//    .attr('height',function(d,i) {return height - y(d.Global_Sales);})
-//    .attr("fill", "#69b3a2")
-
-// d3.select("svg").append("g")
-//   .attr("transform", "translate("+margin+","+margin+")")
-//   .call(d3.axisLeft(y));
-
-// d3.select("svg").append("g")
-//   .attr("transform", "translate("+margin+","+(height+margin)+")")
-//   .call(d3.axisBottom(x));
-
-// }
 
 // ---------------------------------------------------------------
 
