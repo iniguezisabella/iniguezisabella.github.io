@@ -7,7 +7,7 @@
             async function init(){
                 const data = await d3.csv('https://iniguezisabella.github.io/data/sales.csv');
 
-                var width = 500; // changed to 400
+                var width = 500;
                 var height = 250;
                 var x = d3.scaleBand()
                 .domain(data.map(d => d.Genre))// .domain(['Action', 'Adventure', 'Fighting', 'Misc', 'Platform', 'Puzzle', 'Racing', 'Role-Playing', 'Shooter', 'Simulation', 'Sports','Strategy'])
@@ -15,7 +15,7 @@
                 .padding(0.2);
 
                 var y = d3.scaleLinear().domain([0,1800]).range([height,0])
-                var margin = 50;
+                var margin = 75; // changed from 50
 
                 d3.select("svg")
                 .attr("width", width + 2*margin)
