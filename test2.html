@@ -73,13 +73,18 @@
                 .attr("transform", "translate("+margin+","+margin+")")
                 .call(d3.axisLeft(y));
 
+                // d3.select("svg").append("g")
+                // .attr("transform", "translate("+margin+","+(height+margin)+")")
+                // .call(d3.axisBottom(x));
+
                 d3.select("svg").append("g")
                 .attr("transform", "translate("+margin+","+(height+margin)+")")
-                .call(d3.axisBottom(x)) //;
+                .call(d3.axisBottom(x))//.call(xaxis)
+                .selectAll("text")  
                 .style("text-anchor", "end")
                 .attr("dx", "-.8em")
                 .attr("dy", ".15em")
-                .attr("transform", "rotate(65)");
+                .attr("transform", "rotate(-65)");
             }
         </script>
     </body>
