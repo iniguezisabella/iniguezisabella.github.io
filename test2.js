@@ -1,6 +1,7 @@
 async function init() {
 
 const data = await d3.csv('https://iniguezisabella.github.io/data/sales.csv');
+console.log(data);
 // const data =
 //  [{'Genre': 'Action','NA_Sales': 861.77,'EU_Sales': 516.48,'JP_Sales': 158.65,'Other_Sales': 184.92000000000002,'Global_Sales':1722.84},
 //  {'Genre': 'Adventure','NA_Sales': 101.93,'EU_Sales': 63.74,'JP_Sales': 51.99,'Other_Sales': 16.7,'Global_Sales': 234.59},
