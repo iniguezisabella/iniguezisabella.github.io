@@ -47,7 +47,7 @@
             async function init(){
                 const data = await d3.csv('https://iniguezisabella.github.io/data/sales.csv');
 
-                var width = 200;
+                var width = 400; // changed to 400
                 var height = 200;
                 var x = d3.scaleBand()
                 .domain(data.map(d => d.Genre))// .domain(['Action', 'Adventure', 'Fighting', 'Misc', 'Platform', 'Puzzle', 'Racing', 'Role-Playing', 'Shooter', 'Simulation', 'Sports','Strategy'])
