@@ -47,7 +47,7 @@
             async function init(){
                 const data = await d3.csv('https://iniguezisabella.github.io/data/sales.csv');
 
-                var width = 400; // changed to 400
+                var width = 600; // changed to 400
                 var height = 200;
                 var x = d3.scaleBand()
                 .domain(data.map(d => d.Genre))// .domain(['Action', 'Adventure', 'Fighting', 'Misc', 'Platform', 'Puzzle', 'Racing', 'Role-Playing', 'Shooter', 'Simulation', 'Sports','Strategy'])
@@ -75,7 +75,11 @@
 
                 d3.select("svg").append("g")
                 .attr("transform", "translate("+margin+","+(height+margin)+")")
-                .call(d3.axisBottom(x));
+                .call(d3.axisBottom(x)) //;
+                .style("text-anchor", "end")
+                .attr("dx", "-.8em")
+                .attr("dy", ".15em")
+                .attr("transform", "rotate(65)");
             }
         </script>
     </body>
