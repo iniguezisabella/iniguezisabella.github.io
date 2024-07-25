@@ -1,48 +1,40 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Video Games Plot TEMP</title>
+<html>
     <script src="https://d3js.org/d3.v6.min.js"></script>
-</head>
-<body>
-    <h2>Video Games Plot</h2>
-    <p>to be written</p>
-    <svg width="300" height="300"></svg>
+    <body onload='init()'>
+        <svg width="300" height="300"></svg>
     <!-- <script src="test2.js"></script> -->
-     <script>
-        async function init(){
-            const data = await d3.csv('https://flunky.github.io/cars2017.csv');
+        <script>
+            async function init(){
+                const data = await d3.csv('https://flunky.github.io/cars2017.csv');
 
-            var width = 300;
-            var height = 300;
-            var margin = 50;
+                var width = 300;
+                var height = 300;
+                var margin = 50;
 
-            var x = d3.scaleLog().base(10).domain([10,150]).range([0,200]); 
-            var y = d3.scaleLog().base(10).domain([10,150]).range([200,0]);
+                var x = d3.scaleLog().base(10).domain([10,150]).range([0,200]); 
+                var y = d3.scaleLog().base(10).domain([10,150]).range([200,0]);
 
-            var xaxis = d3.axisBottom(x).tickValues([10,20,50,100]).tickFormat(d3.format("~s"));
-            var yaxis = d3.axisLeft(y).tickValues([10,20,50,100]).tickFormat(d3.format("~s"));
+                var xaxis = d3.axisBottom(x).tickValues([10,20,50,100]).tickFormat(d3.format("~s"));
+                var yaxis = d3.axisLeft(y).tickValues([10,20,50,100]).tickFormat(d3.format("~s"));
 
-            d3.select("svg")
-            .attr("width", width)
-            .attr("height", height)
-            .append("g")
-            .attr("transform", "translate("+margin+","+margin+")")
-            .selectAll('circle').data(data).enter().append('circle')
-            .attr("cx",function(d) {return x(d.AverageCityMPG);})
-            .attr("cy",function(d) {return y(d.AverageHighwayMPG);})
-            .attr("r", function(d) {return 2+1*d.EngineCylinders;})
+                d3.select("svg")
+                .attr("width", width)
+                .attr("height", height)
+                .append("g")
+                .attr("transform", "translate("+margin+","+margin+")")
+                .selectAll('circle').data(data).enter().append('circle')
+                .attr("cx",function(d) {return x(d.AverageCityMPG);})
+                .attr("cy",function(d) {return y(d.AverageHighwayMPG);})
+                .attr("r", function(d) {return 2+1*d.EngineCylinders;})
 
-            d3.select("svg").append("g")
-            .attr("transform", "translate("+margin+","+margin+")")
-            .call(yaxis);
+                d3.select("svg").append("g")
+                .attr("transform", "translate("+margin+","+margin+")")
+                .call(yaxis);
 
-            d3.select("svg").append("g")
-            .attr("transform", "translate("+margin+","+(200+margin)+")")
-            .call(xaxis);
-        }
-     </script>
-</body>
+                d3.select("svg").append("g")
+                .attr("transform", "translate("+margin+","+(200+margin)+")")
+                .call(xaxis);
+            }
+        </script>
+    </body>
 </html>
