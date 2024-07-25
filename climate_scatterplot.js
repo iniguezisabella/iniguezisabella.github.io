@@ -1,5 +1,9 @@
-const data = await d3.csv('https://iniguezisabella.github.io/globalTempsData.csv');
-
+const data = d3.csv('https://iniguezisabella.github.io/globalTempsData.csv');
+// const data = [
+//     { year: 2020, Jan: 5, Feb: 6, Mar: 10, Apr: 15, May: 20, Jun: 25, Jul: 30, Aug: 29, Sep: 22, Oct: 16, Nov: 10, Dec: 5 },
+//     { year: 2021, Jan: 4, Feb: 5, Mar: 9, Apr: 14, May: 19, Jun: 24, Jul: 29, Aug: 28, Sep: 21, Oct: 15, Nov: 9, Dec: 4 },
+//     // ... more data points for different years
+//   ];
 const margin = { top: 20, right: 20, bottom: 30, left: 50 },
 width = 800 - margin.left - margin.right,
 height = 500 - margin.top - margin.bottom;
