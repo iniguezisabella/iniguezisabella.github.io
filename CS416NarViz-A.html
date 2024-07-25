@@ -27,22 +27,23 @@
                 var height = 250;
                 var x = d3.scaleBand()
                 .domain(data.map(d => d.Genre))
+                .range([0,width]) //
                 .padding(0.2);
 
                 var y = d3.scaleLinear().domain([0,1800]).range([height,0])
                 var margin = 75; // changed from 50
 
-                d3.select("svg") // svg
-                    .attr("width", width + 2*margin)
-                    .attr("height", height + 2*margin)
-                    .append("g")
-                    .attr("transform", "translate("+margin+","+margin+")")
-                    .selectAll('rect').data(data).enter().append('rect') //bars
-                    .attr("x",function(d,i) {return x(d.Genre);}) 
-                    .attr("y",function(d,i) {return y(d.Global_Sales);})
-                    .attr('width', x.bandwidth())
-                    .attr('height',function(d,i) {return height - y(d.Global_Sales);})
-                    .attr("fill", "#69b3a2")
+                d3.select("svg")
+                .attr("width", width + 2*margin)
+                .attr("height", height + 2*margin)
+                .append("g")
+                .attr("transform", "translate("+margin+","+margin+")")
+                .selectAll('rect').data(data).enter().append('rect') //bars
+                .attr("x",function(d,i) {return x(d.Genre);}) // {return x(i);})
+                .attr("y",function(d,i) {return y(d.Global_Sales);}) // {return y(d);})
+                .attr('width', x.bandwidth())
+                .attr('height',function(d,i) {return height - y(d.Global_Sales);})
+                .attr("fill", "#69b3a2")
 
                 d3.select("svg").append("g")
                 .attr("transform", "translate("+margin+","+margin+")")
