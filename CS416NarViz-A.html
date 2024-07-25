@@ -1,8 +1,21 @@
 <html>
+    <head>
+        <style>
+        h1 {text-align: center;}
+        h2 {text-align: center;}
+        h4 {text-align: center;}
+        p {text-align: center;}
+        div {text-align: center;}
+        </style>
+    </head>
     <script src="https://d3js.org/d3.v6.min.js"></script>
     <body onload='init()'>
+        <h1>What is the recipe to a best selling game?</h1>
+        <h4>CS 416 Narrative Visualization by Isabella Iniguez</h4>
+        <p>In this interactive slideshow, TBD </p>
+
         <svg width="300" height="300"></svg>
-    <!-- <script src="test2.js"></script> -->
+        <!-- <script src="test2.js"></script> -->
         <script>
             async function init(){
                 const data = await d3.csv('https://iniguezisabella.github.io/data/sales.csv');
@@ -47,5 +60,13 @@
                 .attr("transform", "rotate(-65)");
             }
         </script>
+
+        <div class="navbar">
+            <a href="CS416NarViz-A.html">1</a>
+            <a href="CS416NarViz-B.html">2</a>
+            <a href="CS416NarViz-C.html">3</a>
+          </div>
+    
+          <p>Dataset: <a href="https://www.kaggle.com/datasets/gregorut/videogamesales">Kaggle</a> </p> 
     </body>
 </html>
