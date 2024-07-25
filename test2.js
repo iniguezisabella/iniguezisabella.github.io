@@ -1,6 +1,6 @@
-// async function init() {
+async function init() {
 
-var data = d3.csv('https://iniguezisabella.github.io/data/sales.csv');
+const data = await d3.csv('https://iniguezisabella.github.io/data/sales.csv');
 // const data =
 //  [{'Genre': 'Action','NA_Sales': 861.77,'EU_Sales': 516.48,'JP_Sales': 158.65,'Other_Sales': 184.92000000000002,'Global_Sales':1722.84},
 //  {'Genre': 'Adventure','NA_Sales': 101.93,'EU_Sales': 63.74,'JP_Sales': 51.99,'Other_Sales': 16.7,'Global_Sales': 234.59},
@@ -38,7 +38,7 @@ d3.select("svg").append("g")
   .attr("transform", "translate("+margin+","+(height+margin)+")")
   .call(d3.axisBottom(x));
 
-// }
+}
 
 // // set the dimensions and margins of the graph
 // const margin = {top: 10, right: 30, bottom: 20, left: 50},
