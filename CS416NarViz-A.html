@@ -71,12 +71,12 @@
                 .append("g")
                 .attr("transform", "translate("+margin+","+margin+")")
                 .selectAll('rect').data(data).enter().append('rect') //bars
-                .on("mouseover", onMouseOver)
-                .on("mouseout", onMouseOut)
                 .attr("x",function(d,i) {return x(d.Genre);}) 
                 .attr("y",function(d,i) {return y(d.Global_Sales);})
                 .attr('width', x.bandwidth())
                 .attr('height',function(d,i) {return height - y(d.Global_Sales);})
+                .on("mouseover", onMouseOver)
+                .on("mouseout", onMouseOut)
                 // .attr("fill", "#69b3a2")
 
                 d3.select("svg").append("g")
