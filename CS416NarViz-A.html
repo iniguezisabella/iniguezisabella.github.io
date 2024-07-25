@@ -10,15 +10,16 @@
     </head>
     <script src="https://d3js.org/d3.v6.min.js"></script>
     <body onload='init()'>
-        <h1>What is the recipe to a best selling game?</h1>
+        <h1>What is the recipe to a best selling video game?</h1>
         <h4>CS 416 Narrative Visualization by Isabella Iniguez</h4>
         <p>In this interactive slideshow, TBD </p>
-
+        <p>Here in this first barplot, we can see the trends in what video game genres tend to sell the most. </p>
+            <p>Hover over each bar to see how the numbers break down based on region!</p>
         <svg width="300" height="300"></svg>
         <!-- <script src="test2.js"></script> -->
         <script>
             async function init(){
-                const data = await d3.csv('https://iniguezisabella.github.io/data/sales.csv');
+                const data = await d3.csv('https://iniguezisabella.github.io/data/genre_sales.csv');
 
                 var width = 500;
                 var height = 250;
