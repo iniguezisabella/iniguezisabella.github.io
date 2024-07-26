@@ -18,14 +18,14 @@
             <p>Hover over each bar to see how the numbers break down based on region!</p>
 
             <!-- <svg width="300" height="300"></svg> -->
-            <svg width="600" height="300"></svg>
+            <svg width="300" height="300"></svg>
 
         <script>
             async function init(){
                 const data = await d3.csv('https://iniguezisabella.github.io/data/meta_sales.csv');
 
                 var width = 300;
-                var height = 600;
+                var height = 300;
                 var margin = 50;
 
                 var x = d3.scaleBand().domain([0,100]).range([0,height])
@@ -40,9 +40,10 @@
                 .append("g")
                     .attr("transform", "translate("+margin+","+margin+")")
                 .selectAll('circle').data(data).enter().append('circle')
-                .attr("x",function(d) {return x(d.metacritic);})
-                .attr("y",function(d) {return y(d.Global_Sales);})
+                .attr("cx",function(d) {return x(d.metacritic);})
+                .attr("cy",function(d) {return y(d.Global_Sales);})
                 .attr("r", 10)
+                .style("fill", "black")
 
                 d3.select("svg").append("g")
                 .attr("transform", "translate("+margin+","+margin+")")
