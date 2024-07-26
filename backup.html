@@ -20,6 +20,37 @@
   <div id="tooltip"></div>
 
   <script>
+    // const data = await d3.csv('https://iniguezisabella.github.io/data/meta_sales.csv');
+
+    // var width = 300;
+    // var height = 300;
+    // var margin = 50;
+
+    // var x = d3.scaleBand().domain([0,100]).range([0,height])
+    // var y = d3.scaleLinear().domain([0,1300]).range([height,0])
+
+    // var xaxis = d3.axisBottom(x).tickValues([0,25,50,100]).tickFormat(d3.format("~s"));
+    // var yaxis = d3.axisLeft(y).tickValues([100,500,1000,1300]).tickFormat(d3.format("~s"));
+
+    // d3.select("svg")
+    // .attr("width", width)
+    // .attr("height", height)
+    // .append("g")
+    //   .attr("transform", "translate("+margin+","+margin+")")
+    // .selectAll('circle').data(data).enter().append('circle')
+    // .attr("cx",function(d) {return x(d.metacritic);})
+    // .attr("cy",function(d) {return y(d.Global_Sales);})
+    // .attr("r", 10)
+    // .style("fill", "black")
+
+    // d3.select("svg").append("g")
+    // .attr("transform", "translate("+margin+","+margin+")")
+    // .call(yaxis);
+
+    // d3.select("svg").append("g")
+    // .attr("transform", "translate("+margin+","+(height+margin)+")")
+    // .call(xaxis)
+
     var width = 120, height = 300;
 
     var data = [4,8,15,16,23,42];
