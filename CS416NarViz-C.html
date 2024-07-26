@@ -21,12 +21,12 @@
         <!-- <script src="test2.js"></script> -->
         <script>
             async function init(){
-                const data = await d3.csv('https://iniguezisabella.github.io/data/genre_sales.csv');
+                const data = await d3.csv('https://iniguezisabella.github.io/data/platform_sales.csv');
 
                 var width = 500;
                 var height = 250;
                 var x = d3.scaleBand()
-                .domain(data.map(d => d.Genre))
+                .domain(data.map(d => d.Platform))
                 .range([0,width]) //
                 .padding(0.2);
 
@@ -39,7 +39,7 @@
                 .append("g")
                 .attr("transform", "translate("+margin+","+margin+")")
                 .selectAll('rect').data(data).enter().append('rect') //bars
-                .attr("x",function(d,i) {return x(d.Genre);}) // {return x(i);})
+                .attr("x",function(d,i) {return x(d.Platform);}) // {return x(i);})
                 .attr("y",function(d,i) {return y(d.Global_Sales);}) // {return y(d);})
                 .attr('width', x.bandwidth())
                 .attr('height',function(d,i) {return height - y(d.Global_Sales);})
