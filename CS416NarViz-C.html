@@ -17,17 +17,18 @@
         <p>Is there somthing else at play here? Maybe where people are able tp play the game contributes to sales. In this barplot, we can see the trends in what video game platforms tend to sell the most. </p>
             <p>Hover over each bar to see how the numbers break down based on region!</p>
 
-            <svg width="300" height="300"></svg>
+            <!-- <svg width="300" height="300"></svg> -->
+            <svg width="600" height="300"></svg>
 
         <script>
             async function init(){
                 const data = await d3.csv('https://iniguezisabella.github.io/data/meta_sales.csv');
 
                 var width = 300;
-                var height = 500;
+                var height = 600;
                 var margin = 50;
 
-                var x = d3.scaleLinear().domain([0,100]).range([0,height])
+                var x = d3.scaleBand().domain([0,100]).range([0,height])
                 var y = d3.scaleLinear().domain([0,1300]).range([height,0])
 
                 var xaxis = d3.axisBottom(x).tickValues([0,25,50,100]).tickFormat(d3.format("~s"));
@@ -39,8 +40,8 @@
                 .append("g")
                     .attr("transform", "translate("+margin+","+margin+")")
                 .selectAll('circle').data(data).enter().append('circle')
-                .attr("cx",function(d) {return x(d.metacritic);})
-                .attr("cy",function(d) {return y(d.Global_Sales);})
+                .attr("x",function(d) {return x(d.metacritic);})
+                .attr("y",function(d) {return y(d.Global_Sales);})
                 .attr("r", 10)
 
                 d3.select("svg").append("g")
