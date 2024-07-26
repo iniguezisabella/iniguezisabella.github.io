@@ -18,7 +18,7 @@
             <p>Hover over each bar to see how the numbers break down based on region!</p>
 
             <svg width="300" height="300"></svg>
-        <!-- <script src="test2.js"></script> -->
+
         <script>
             async function init(){
                 const data = await d3.csv('https://iniguezisabella.github.io/data/platform_sales.csv');
@@ -30,7 +30,7 @@
                 .range([0,width]) //
                 .padding(0.2);
 
-                var y = d3.scaleLinear().domain([0,1800]).range([height,0])
+                var y = d3.scaleLinear().domain([0,1300]).range([height,0])
                 var margin = 75; // changed from 50
 
                 d3.select("svg")
