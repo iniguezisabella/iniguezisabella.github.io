@@ -30,7 +30,7 @@
                 const data = await d3.csv('https://iniguezisabella.github.io/data/meta_sales.csv');
                 
                 var width = 500;
-                var height = 250;
+                var height = 500;
                 var margin = 75;
 
                 var x = d3.scaleLinear()
@@ -67,7 +67,7 @@
                     .attr("cx", d => x(d.metacritic))
                     .attr("cy", d => y(d.Global_Sales))
                     .attr("r", 3)
-                    .attr("fill", '#69b3a2'); // changed fill
+                    .attr("fill", '#69b3a2');
             }
         </script>
         <div class="navbar">
