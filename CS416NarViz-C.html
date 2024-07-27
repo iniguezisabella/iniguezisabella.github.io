@@ -35,9 +35,9 @@
 
                 var x = d3.scaleLinear()
                     .domain([20, 100]).nice()
-                    .range([0, width])
+                    .range([20, width])
                 var y = d3.scaleLinear()
-                    .domain([20, 90]).nice()
+                    .domain([0, 100]).nice()
                     .range([height, 0]);
 
                 var xaxis = d3.axisBottom(x).tickValues([20,40,60,80,100]).tickFormat(d3.format("~s"));
