@@ -32,13 +32,12 @@
 
                 var width = 500;
                 var height = 250;
-                var x = d3.scaleBand()
-                    .domain(data.map(d => d.metacritic))
+                var x = d3.scaleLinear()
+                    .domain([0, d3.max(data, d => d.metacritic)]).nice() 
                     .range([0, width])
                     .padding(0.2);
                 var y = d3.scaleLinear()
-                .domain(data.map(d => d.Global_Sales))
-                    .nice()
+                    .domain([0, d3.max(data, d => d.Global_Sales)]).nice() 
                     .range([height, 0]);
                 var margin = 75;
 
