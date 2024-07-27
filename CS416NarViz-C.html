@@ -52,6 +52,7 @@
                 
                 svg.append("g")
                     .attr("class", "y-axis")
+                    .attr("transform", "translate("+margin+","+margin+")")
                     .call(yaxis);
                 
                 svg.append("g")
@@ -66,8 +67,8 @@
                     .attr("class", "dot")
                     .attr("cx", d => x(d.metacritic))
                     .attr("cy", d => y(d.Global_Sales))
-                    .attr("r", 5)
-                    .attr("fill", "steelblue");
+                    .attr("r", 3)
+                    .attr("fill", '#69b3a2'); // changed fill
             }
         </script>
         <div class="navbar">
