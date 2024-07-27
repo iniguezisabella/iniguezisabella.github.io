@@ -69,7 +69,7 @@
                     .attr("class", "x-axis")
                     .attr("transform", "translate(0,"+(height)+")")
                     .call(d3.axisBottom(x))
-                    .selectAll("text")  
+                    .selectAll("text")  // tilt x-labels
                     .style("text-anchor", "end")
                     .attr("dx", "-.8em")
                     .attr("dy", ".15em")
@@ -85,7 +85,7 @@
                     .attr("x", d => x(d.Genre))
                     .attr("y", d => y(d.Global_Sales))
                     .attr("width", x.bandwidth())
-                    .attr("height", d => height - y(d.metacritic))
+                    .attr("height", d => height - y(d.Global_Sales))
                     .on("mouseover", (event, d) => {
                         tooltip.transition().duration(200).style("opacity", .9);
                         tooltip.html(`Genre: ${d.Genre}
