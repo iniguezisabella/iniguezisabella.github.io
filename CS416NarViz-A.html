@@ -7,6 +7,21 @@
         h4 {text-align: center;}
         p {text-align: center;}
         div {text-align: center;}
+
+        .bar {
+            fill: steelblue;
+        }
+        .tooltip {
+            position: absolute;
+            background-color: white;
+            border: 1px solid #ccc;
+            padding: 5px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.2s ease;
+        }
+
         </style>
     
     </head>
@@ -19,7 +34,10 @@
         <p>Here in this first barplot, we can see the trends in what video game genres tend to be rated highest (metacritic). </p>
             <p>Is this what you would have expected?</p>
 
-            <svg width="300" height="300"></svg>
+            <div id="chart"></div>
+            <div id="tooltip" class="tooltip"></div>
+            <!-- <svg width="300" height="300"></svg> -->
+            <!-- <div name=“tooltip” opacity=0></div>  -->
             
         <script>
             async function init(){
@@ -35,30 +53,88 @@
                 var y = d3.scaleLinear().domain([68,80]).range([height,0])
                 var margin = 75; // changed from 50
 
-                d3.select("svg")
-                .attr("width", width + 2*margin)
-                .attr("height", height + 2*margin)
-                .append("g")
-                .attr("transform", "translate("+margin+","+margin+")")
-                .selectAll('rect').data(data).enter().append('rect') //bars
-                .attr("x",function(d,i) {return x(d.Genre);}) // {return x(i);})
-                .attr("y",function(d,i) {return y(d.metacritic);}) // {return y(d);})
-                .attr('width', x.bandwidth())
-                .attr('height',function(d,i) {return height - y(d.metacritic);})
-                .attr("fill", "#69b3a2")
+                // -----
+                // create a tooltip
+                // var Tooltip = d3.select("svg")
+                //     .append("div")
+                //     .style("opacity", 0)
+                //     .attr("class", "tooltip")
+                //     .style("background-color", "white")
+                //     .style("border", "solid")
+                //     .style("border-width", "2px")
+                //     .style("border-radius", "5px")
+                //     .style("padding", "5px")
 
-                d3.select("svg").append("g")
+                // Three function that change the tooltip when user hover / move / leave a cell
+                // var mouseover = function(d) {
+                //     Tooltip
+                //     .style("opacity", 1)
+                //     d3.select(this)
+                //     .style("stroke", "black")
+                //     .style("opacity", 1)
+                // }
+                // var mousemove = function(d) {
+                //     Tooltip
+                //     .html("The exact value of<br>this cell is: " + d.value)
+                //     .style("left", (d3.mouse(this)[0]+70) + "px")
+                //     .style("top", (d3.mouse(this)[1]) + "px")
+                // }
+                // var mouseleave = function(d) {
+                //     Tooltip
+                //     .style("opacity", 0)
+                //     d3.select(this)
+                //     .style("stroke", "none")
+                //     .style("opacity", 0.8)
+                // }
+                // -----
+
+                const svg = d3.select("#chart")
+                    .append("svg")
+                    .attr("width", width + 2*margin)
+                    .attr("height", height + 2*margin)
+                    .append("g")
+                    .attr("transform", "translate("+margin+","+margin+")")
+                    .selectAll('rect').data(data).enter().append('rect') //bars
+                    .attr("x",function(d,i) {return x(d.Genre);}) // {return x(i);})
+                    .attr("y",function(d,i) {return y(d.metacritic);}) // {return y(d);})
+                    .attr('width', x.bandwidth())
+                    .attr('height',function(d,i) {return height - y(d.metacritic);})
+                    .attr("fill", "#69b3a2")
+                    // .on("mouseover", mouseover) //
+                    // .on("mousemove", mousemove) //
+                    // .on("mouseleave", mouseleave) //
+
+                svg.append("g")
                 .attr("transform", "translate("+margin+","+margin+")")
                 .call(d3.axisLeft(y));
 
-                d3.select("svg").append("g")
+                svg.append("g")
                 .attr("transform", "translate("+margin+","+(height+margin)+")")
-                .call(d3.axisBottom(x))//.call(xaxis)
+                .call(d3.axisBottom(x))
                 .selectAll("text")  
                 .style("text-anchor", "end")
                 .attr("dx", "-.8em")
                 .attr("dy", ".15em")
                 .attr("transform", "rotate(-65)");
+
+                svg.selectAll(".bar")
+                    .data(data)
+                    .enter()
+                    .append("rect")
+                    .attr("class", "bar")
+                    .attr("x", d => x(d.Genre))
+                    .attr("y", d => y(d.metacritic))
+                    .attr("width", x.bandwidth())
+                    .attr("height", d => height - y(d.value))
+                    .on("mouseover", (event, d) => {
+                        tooltip.transition().duration(200).style("opacity", .9);
+                        tooltip.html(`Genre: ${d.Genre}<br>Meta: ${d.metacritic}`)
+                            .style("left", (event.pageX + 5) + "px")
+                            .style("top", (event.pageY - 28) + "px");
+                    })
+                    .on("mouseout", () => {
+                        tooltip.transition().duration(500).style("opacity", 0);
+                    });
             }
 
         </script>
