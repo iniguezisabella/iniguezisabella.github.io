@@ -7,6 +7,12 @@
         h4 {text-align: center;}
         p {text-align: center;}
         div {text-align: center;}
+
+        .dot {
+            stroke: #000;
+            stroke-width: 1px;
+        }
+
         </style>
     
     </head>
@@ -17,48 +23,64 @@
         <p>Is there somthing else at play here? Maybe where people are able tp play the game contributes to sales. In this barplot, we can see the trends in what video game platforms tend to sell the most. </p>
             <p>Hover over each bar to see how the numbers break down based on region!</p>
 
-            <!-- <svg width="300" height="300"></svg> -->
-            <svg width="300" height="300"></svg>
+            <div id="chart"></div>
 
         <script>
             async function init(){
 
-                const data = await d3.csv('https://iniguezisabella.github.io/data/platform_sales.csv');
+                const data = await d3.csv('https://iniguezisabella.github.io/data/meta_sales.csv');
 
                 var width = 500;
                 var height = 250;
                 var x = d3.scaleBand()
-                .domain(data.map(d => d.Platform))
-                .range([0,width]) //
-                .padding(0.2);
+                    .domain(data.map(d => d.metacritic))
+                    .range([0, width])
+                    .padding(0.2);
+                var y = d3.scaleLinear()
+                    .domain([0, 1800])
+                    .nice()
+                    .range([height, 0]);
+                var margin = 75;
 
-                var y = d3.scaleLinear().domain([0,1300]).range([height,0])
-                var margin = 75; // changed from 50
+                const svg = d3.select("#chart")
+                    .append("svg")
+                    .attr("width", width + 2*margin)
+                    .attr("height", height + 2*margin)
+                    .append("g")
+                    .attr("transform", "translate("+margin+","+margin+")")
 
-                d3.select("svg")
-                .attr("width", width + 2*margin)
-                .attr("height", height + 2*margin)
-                .append("g")
-                .attr("transform", "translate("+margin+","+margin+")")
-                .selectAll('rect').data(data).enter().append('rect') //bars
-                .attr("x",function(d,i) {return x(d.Platform);}) // {return x(i);})
-                .attr("y",function(d,i) {return y(d.Global_Sales);}) // {return y(d);})
-                .attr('width', x.bandwidth())
-                .attr('height',function(d,i) {return height - y(d.Global_Sales);})
-                .attr("fill", "#69b3a2")
+                svg.append("g")
+                    .attr("class", "y-axis")
+                    .call(d3.axisLeft(y));
 
-                d3.select("svg").append("g")
-                .attr("transform", "translate("+margin+","+margin+")")
-                .call(d3.axisLeft(y));
-
-                d3.select("svg").append("g")
-                .attr("transform", "translate("+margin+","+(height+margin)+")")
-                .call(d3.axisBottom(x))//.call(xaxis)
-                .selectAll("text")  
-                .style("text-anchor", "end")
-                .attr("dx", "-.8em")
-                .attr("dy", ".15em")
-                .attr("transform", "rotate(-65)");
+                svg.append("g")
+                    .attr("class", "x-axis")
+                    .attr("transform", "translate(0,"+(height)+")")
+                    .call(d3.axisBottom(x))
+                    .selectAll("text")  // tilt x-labels
+                    .style("text-anchor", "end")
+                    .attr("dx", "-.8em")
+                    .attr("dy", ".15em")
+                    .attr("transform", "rotate(-65)");
+                
+                    svg.selectAll(".dot")
+                        .data(data)
+                        .enter()
+                        .append("circle")
+                        .attr("class", "dot")
+                        .attr("cx", d => x(d.metacritic))
+                        .attr("cy", d => y(d.Global_Sales))
+                        .attr("r", 3)
+                        .on("mouseover", (event, d) => {
+                            tooltip.transition().duration(200).style("opacity", .9);
+                            tooltip.html(`Rating: ${d.metacritic}
+                                        <br>Global Sales: ${d.Global_Sales}M`)
+                                .style("left", (event.pageX + 5) + "px")
+                                .style("top", (event.pageY - 28) + "px");
+                        })
+                        .on("mouseout", () => {
+                            tooltip.transition().duration(500).style("opacity", 0);
+                        });
             }
 
         </script>
