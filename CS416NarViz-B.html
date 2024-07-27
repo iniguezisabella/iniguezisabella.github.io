@@ -7,6 +7,22 @@
         h4 {text-align: center;}
         p {text-align: center;}
         div {text-align: center;}
+
+        .bar {
+            fill: #69b3a2;
+        }
+        .tooltip {
+            position: absolute;
+            background-color: white;
+            border: 1px solid #ccc;
+            padding: 5px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.2s ease;
+            text-align: left;
+        }
+
         </style>
     
     </head>
@@ -19,7 +35,8 @@
             <p>How does this compare to the ratings?</p>
             <p>Hover over each bar to see how the numbers break down based on region!</p>
 
-            <svg width="300" height="300"></svg>
+            <div id="chart"></div>
+            <div id="tooltip" class="tooltip"></div>
 
         <script>
             async function init(){
@@ -28,37 +45,61 @@
                 var width = 500;
                 var height = 250;
                 var x = d3.scaleBand()
-                .domain(data.map(d => d.Genre))
-                .range([0,width]) //
-                .padding(0.2);
+                    .domain(data.map(d => d.Genre))
+                    .range([0, width])
+                    .padding(0.2);
+                var y = d3.scaleLinear()
+                    .domain([0, d3.max(data, d => d.Global_Sales)])
+                    .nice()
+                    .range([height, 0]);
+                var margin = 75;
 
-                var y = d3.scaleLinear().domain([0,1800]).range([height,0])
-                var margin = 75; // changed from 50
+                const svg = d3.select("#chart")
+                    .append("svg")
+                    .attr("width", width + 2*margin)
+                    .attr("height", height + 2*margin)
+                    .append("g")
+                    .attr("transform", "translate("+margin+","+margin+")")
 
-                d3.select("svg")
-                .attr("width", width + 2*margin)
-                .attr("height", height + 2*margin)
-                .append("g")
-                .attr("transform", "translate("+margin+","+margin+")")
-                .selectAll('rect').data(data).enter().append('rect') //bars
-                .attr("x",function(d,i) {return x(d.Genre);}) // {return x(i);})
-                .attr("y",function(d,i) {return y(d.Global_Sales);}) // {return y(d);})
-                .attr('width', x.bandwidth())
-                .attr('height',function(d,i) {return height - y(d.Global_Sales);})
-                .attr("fill", "#69b3a2")
+                svg.append("g")
+                    .attr("class", "y-axis")
+                    .call(d3.axisLeft(y));
 
-                d3.select("svg").append("g")
-                .attr("transform", "translate("+margin+","+margin+")")
-                .call(d3.axisLeft(y));
+                svg.append("g")
+                    .attr("class", "x-axis")
+                    .attr("transform", "translate(0,"+(height)+")")
+                    .call(d3.axisBottom(x))
+                    .selectAll("text")  
+                    .style("text-anchor", "end")
+                    .attr("dx", "-.8em")
+                    .attr("dy", ".15em")
+                    .attr("transform", "rotate(-65)");
+                
+                const tooltip = d3.select("#tooltip"); // tooltip
 
-                d3.select("svg").append("g")
-                .attr("transform", "translate("+margin+","+(height+margin)+")")
-                .call(d3.axisBottom(x))//.call(xaxis)
-                .selectAll("text")  
-                .style("text-anchor", "end")
-                .attr("dx", "-.8em")
-                .attr("dy", ".15em")
-                .attr("transform", "rotate(-65)");
+                svg.selectAll(".bar") // bars
+                    .data(data)
+                    .enter()
+                    .append("rect")
+                    .attr("class", "bar")
+                    .attr("x", d => x(d.Genre))
+                    .attr("y", d => y(d.Global_Sales))
+                    .attr("width", x.bandwidth())
+                    .attr("height", d => height - y(d.metacritic))
+                    .on("mouseover", (event, d) => {
+                        tooltip.transition().duration(200).style("opacity", .9);
+                        tooltip.html(`Genre: ${d.Genre}
+                                    <br>Global Sales: ${d.Global_Sales}M
+                                    <br>North America Sales: ${d.NA_Sales}M
+                                    <br>Europe Sales: ${d.EU_Sales}M
+                                    <br>Japan Sales: ${d.JP_Sales}M 
+                                    <br>Other Sales: ${d.Other_Sales}M`)
+                            .style("left", (event.pageX + 5) + "px")
+                            .style("top", (event.pageY - 28) + "px");
+                    })
+                    .on("mouseout", () => {
+                        tooltip.transition().duration(500).style("opacity", 0);
+                    });
             }
 
         </script>
