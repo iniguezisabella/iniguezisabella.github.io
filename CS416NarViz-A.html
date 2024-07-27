@@ -51,7 +51,7 @@
                     // .padding(0.2);
                     .domain(data.map(d => d.Genre))
                     .range([0, width])
-                    .padding(0.1);
+                    .padding(0.2);
                 var y = d3.scaleLinear()//.domain([68,80]).range([height,0])
                     .domain([63, d3.max(data, d => d.metacritic)])
                     .nice()
@@ -80,27 +80,27 @@
                     .attr("class", "x-axis") //
                     .attr("transform", "translate(0,"+(height)+")")
                     .call(d3.axisBottom(x))
-                    // .selectAll("text")  
-                    // .style("text-anchor", "end")
-                    // .attr("dx", "-.8em")
-                    // .attr("dy", ".15em")
-                    // .attr("transform", "rotate(-65)");
+                    .selectAll("text")  //
+                    .style("text-anchor", "end")
+                    .attr("dx", "-.8em")
+                    .attr("dy", ".15em")
+                    .attr("transform", "rotate(-65)");
 
-                const tooltip = d33.select("#tooltip");
-                
+                const tooltip = d3.select("#tooltip");
+
                 svg.selectAll(".bar") // bars
                     .data(data)
                     .enter()
                     .append("rect")
                     .attr("class", "bar")
-                    .attr("x",function(d,i) {return x(d.Genre);}) // {return x(i);})
-                    .attr("y",function(d,i) {return y(d.metacritic);}) // {return y(d);})
-                    .attr('width', x.bandwidth())
-                    .attr('height',function(d,i) {return height - y(d.metacritic);})
-                    // .attr("x", d => x(d.Genre))
-                    // .attr("y", d => y(d.metacritic))
-                    // .attr("width", x.bandwidth())
-                    // .attr("height", d => height - y(d.value))
+                    // .attr("x",function(d,i) {return x(d.Genre);}) // {return x(i);})
+                    // .attr("y",function(d,i) {return y(d.metacritic);}) // {return y(d);})
+                    // .attr('width', x.bandwidth())
+                    // .attr('height',function(d,i) {return height - y(d.metacritic);})
+                    .attr("x", d => x(d.Genre))
+                    .attr("y", d => y(d.metacritic))
+                    .attr("width", x.bandwidth())
+                    .attr("height", d => height - y(d.metacritic))
                     .on("mouseover", (event, d) => {
                         tooltip.transition().duration(200).style("opacity", .9);
                         tooltip.html(`Genre: ${d.Genre}<br>Meta: ${d.metacritic}`)
