@@ -20,7 +20,7 @@
         <h4>CS 416 Narrative Visualization by Isabella Iniguez</h4>
         <h3>Global Sales by Platform</h3>
         <p>Is there somthing else at play here? Maybe where people are able tp play the game contributes to sales. In this barplot, we can see the trends in what video game platforms tend to sell the most. </p>
-            <p>Hover over each bar to see how the numbers break down based on region!</p>
+            <p>Note: Certain data points were excluded as they were large outliers and misrepresented the overall trend. </p>
 
             <div id="chart"></div>
 
@@ -30,18 +30,18 @@
                 const data = await d3.csv('https://iniguezisabella.github.io/data/meta_sales.csv');
                 
                 var width = 400;
-                var height = 400;
+                var height = 350; // changed from 400
                 var margin = 75;
 
                 var x = d3.scaleLinear()
-                    .domain([20, 100]).nice()
-                    .range([20, width])
+                    .domain([0, 100]).nice() 
+                    .range([0, width])
                 var y = d3.scaleLinear()
-                    .domain([0, 100]).nice()
+                    .domain([0, 40]).nice() // changed from [0,100]
                     .range([height, 0]);
 
                 var xaxis = d3.axisBottom(x).tickValues([20,40,60,80,100]).tickFormat(d3.format("~s"));
-                var yaxis = d3.axisLeft(y).tickValues([20,40,60,80,100]).tickFormat(d3.format("~s"));
+                var yaxis = d3.axisLeft(y).tickValues([10,20,30,40]).tickFormat(d3.format("~s")); //  changed tick values from [20,40,60,80,100]
 
                 const svg = d3.select("#chart")
                     .append("svg")
