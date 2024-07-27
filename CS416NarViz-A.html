@@ -53,7 +53,7 @@
                     .range([0, width])
                     .padding(0.1);
                 var y = d3.scaleLinear()//.domain([68,80]).range([height,0])
-                    .domain([0, d3.max(data, d => d.metacritic)])
+                    .domain([63, d3.max(data, d => d.metacritic)])
                     .nice()
                     .range([height, 0]);
                 var margin = 75; // changed from 50
@@ -78,14 +78,16 @@
 
                 svg.append("g")
                     .attr("class", "x-axis") //
-                    .attr("transform", "translate("+margin+","+(height+margin)+")")
+                    .attr("transform", "translate(0,"+(height)+")")
                     .call(d3.axisBottom(x))
-                    .selectAll("text")  
-                    .style("text-anchor", "end")
-                    .attr("dx", "-.8em")
-                    .attr("dy", ".15em")
-                    .attr("transform", "rotate(-65)");
+                    // .selectAll("text")  
+                    // .style("text-anchor", "end")
+                    // .attr("dx", "-.8em")
+                    // .attr("dy", ".15em")
+                    // .attr("transform", "rotate(-65)");
 
+                const tooltip = d33.select("#tooltip");
+                
                 svg.selectAll(".bar") // bars
                     .data(data)
                     .enter()
