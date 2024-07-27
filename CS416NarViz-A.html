@@ -8,21 +8,10 @@
         p {text-align: center;}
         div {text-align: center;}
 
-        .bar {
-            fill: #69b3a2;
+        .dot {
+            stroke: #000;
+            stroke-width: 1px;
         }
-        .tooltip {
-            position: absolute;
-            background-color: white;
-            border: 1px solid #ccc;
-            padding: 5px;
-            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-            pointer-events: none;
-            opacity: 0;
-            transition: opacity 0.2s ease;
-            text-align: left;
-        }
-
         </style>
     
     </head>
@@ -30,29 +19,35 @@
         <h1>What is the recipe to a best selling video game?</h1>
         <h4>CS 416 Narrative Visualization by Isabella Iniguez</h4>
         <h3>Intro</h3>
-        <p>With the rise in big publisher’s focus on remakes and reboots while indie gaming continues to scale (thanks to platforms like Roblox and Steam), one may question what tends to make a game successful compared to all the available titles out there. In this interactive slideshow, we aim to uncover the elements that contribute to a best-selling video game. </p>
-        <h3>Average Metacritic Score by Genre</h3>
-        <p>Here in this first barplot, we can see the trends in what video game genres tend to be rated highest (metacritic). </p>
-            <p>Is this what you would have expected?</p>
+        <p>With the rise in big publishers' focus on remakes and reboots while indie gaming continues to 
+            scale (thanks to platforms like Roblox and Steam), one may question what tends to make a game 
+            successful compared to all the available titles out there. In this interactive slideshow, we 
+            aim to uncover some of the elements that contribute to a best-selling video game. </p>
+        <h3>Global Sales by Metascore</h3>
+        <p>The Metascore is a single score (provided by Metacritic) that represents the critical consensus for games, 
+            movies, TV shows and albums. Here in this scatterplot, we plot the relation between the metascore and the
+            total global sales of each game. </p>
 
             <div id="chart"></div>
-            <div id="tooltip" class="tooltip"></div>
-            
+
         <script>
             async function init(){
-                const data = await d3.csv('https://iniguezisabella.github.io/data/genre_ratings.csv');
 
-                var width = 500;
-                var height = 250;
-                var x = d3.scaleBand()
-                    .domain(data.map(d => d.Genre))
-                    .range([0, width])
-                    .padding(0.2);
-                var y = d3.scaleLinear()
-                    .domain([68, d3.max(data, d => d.metacritic)])
-                    .nice()
-                    .range([height, 0]);
+                const data = await d3.csv('https://iniguezisabella.github.io/data/meta_sales.csv');
+                
+                var width = 400;
+                var height = 350; // changed from 400
                 var margin = 75;
+
+                var x = d3.scaleLinear()
+                    .domain([0, 100]).nice() 
+                    .range([0, width])
+                var y = d3.scaleLinear()
+                    .domain([0, 40]).nice() // changed from [0,100]
+                    .range([height, 0]);
+
+                var xaxis = d3.axisBottom(x).tickValues([20,40,60,80,100]).tickFormat(d3.format("~s"));
+                var yaxis = d3.axisLeft(y).tickValues([10,20,30,40]).tickFormat(d3.format("~s")); //  changed tick values from [20,40,60,80,100]
 
                 const svg = d3.select("#chart")
                     .append("svg")
@@ -60,44 +55,31 @@
                     .attr("height", height + 2*margin)
                     .append("g")
                     .attr("transform", "translate("+margin+","+margin+")")
-
+                
                 svg.append("g")
                     .attr("class", "y-axis")
-                    .call(d3.axisLeft(y));
-
+                    .call(yaxis);
+                
                 svg.append("g")
                     .attr("class", "x-axis")
                     .attr("transform", "translate(0,"+(height)+")")
-                    .call(d3.axisBottom(x))
-                    .selectAll("text")  // tilt x-labels
-                    .style("text-anchor", "end")
-                    .attr("dx", "-.8em")
-                    .attr("dy", ".15em")
-                    .attr("transform", "rotate(-65)");
-
-                const tooltip = d3.select("#tooltip"); // tooltip
-
-                svg.selectAll(".bar") // bars
+                    .call(xaxis);
+                
+                svg.selectAll(".dot")
                     .data(data)
                     .enter()
-                    .append("rect")
-                    .attr("class", "bar")
-                    .attr("x", d => x(d.Genre))
-                    .attr("y", d => y(d.metacritic))
-                    .attr("width", x.bandwidth())
-                    .attr("height", d => height - y(d.metacritic))
-                    .on("mouseover", (event, d) => {
-                        tooltip.transition().duration(200).style("opacity", .9);
-                        tooltip.html(`Genre: ${d.Genre}<br>Meta: ${d.metacritic}`)
-                            .style("left", (event.pageX + 5) + "px")
-                            .style("top", (event.pageY - 28) + "px");
-                    })
-                    .on("mouseout", () => {
-                        tooltip.transition().duration(500).style("opacity", 0);
-                    });
+                    .append("circle")
+                    .attr("class", "dot")
+                    .attr("cx", d => x(d.metacritic))
+                    .attr("cy", d => y(d.Global_Sales))
+                    .attr("r", 1)
+                    .attr("fill", '#69b3a2');
             }
-
         </script>
+        
+        <p>Note: A large outlier was excluded for the sake of clarity.</p>
+        <p>We see a general upward trend, indicating a positieve correlation between the two. But each game is 
+            different, so lets try to break it down a little more.</p>
 
         <div class="navbar">
             <a href="CS416NarViz-A.html">1</a>
@@ -106,6 +88,6 @@
             <a href="backup.html">test</a>
           </div>
     
-          <p>Dataset: <a href="https://www.kaggle.com/datasets/dem0nking/video-game-ratings-dataset">Kaggle</a> </p> 
+          <p>Dataset: <a href="https://www.kaggle.com/datasets/gregorut/videogamesales">Kaggle</a> </p> 
     </body>
 </html>
