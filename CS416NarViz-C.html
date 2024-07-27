@@ -64,8 +64,8 @@
                     .enter()
                     .append("circle")
                     .attr("class", "dot")
-                    .attr("cx", d => x(d.metacritic))
-                    .attr("cy", d => y(d.Global_Sales))
+                    .attr("cx", d => x(d.Global_Sales)) //switched
+                    .attr("cy", d => y(d.metacritic)) //switched
                     .attr("r", 5)
                     .attr("fill", "steelblue");
             }
