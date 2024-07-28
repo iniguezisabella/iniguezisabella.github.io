@@ -45,10 +45,9 @@
         <h3>Global Sales by Genre</h3>
         <p>One large way games differ is on their genre. A player won't go into a shooter game expecting the same 
             experience as a puzzle game, so each game's financial success may vary between the constraints and/or 
-            allowances of the particular genre is falls into.
+            allowances of the particular genre it falls into.
         </p>
         <p> Here in this barplot, we can see the trends in what video game genres tend to sell the most. </p>
-            <p>How does this compare to the ratings?</p>
             <p>Hover over each bar to see how the sales break down. Notice how different genres find more 
                 financial success in different regions!</p>
 
@@ -111,7 +110,7 @@
                     .attr("text-anchor", "end")
                     .attr("x", width/2)
                     .attr("y", height + 60)
-                    .text("Metascore")
+                    .text("Genre")
                     .attr("stroke", "black");
 
                 svg.append("text") // y-label
@@ -120,7 +119,7 @@
                     .attr("x", 60 - height/2)
                     .attr("dy", ".75em")
                     .attr("transform", "rotate(-90)")
-                    .text("Global Sales (Millions)")
+                    .text("Average Global Sales (Millions)")
                     .attr("stroke", "black");
                 
                 const tooltip = d3.select("#tooltip"); // tooltip
@@ -192,7 +191,9 @@
             }
 
         </script>
+        <p>We have some fair leaders, but how do their ratings compare?</p>
 
+        <p>Navigate between charts using the buttons bellow.</p>
         <div class="navbar">
             <a href="CS416NarViz-A.html">1</a>
             <a href="CS416NarViz-B.html">2</a>

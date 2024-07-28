@@ -116,7 +116,7 @@
                     .attr("fill", d => colorMap[d.Genre])
                     .on("mouseover", (event, d) => {
                         tooltip.transition().duration(200).style("opacity", .9);
-                        tooltip.html(`Genre: ${d.Genre}<br>Meta: ${d.metacritic}`)
+                        tooltip.html(`Genre: ${d.Genre}<br>Metascore: ${d.metacritic}`)
                             .style("left", (event.pageX + 5) + "px")
                             .style("top", (event.pageY - 28) + "px");
                     })
@@ -128,7 +128,7 @@
                         .attr("text-anchor", "end")
                         .attr("x", width/2)
                         .attr("y", height + 60)
-                        .text("Metascore")
+                        .text("Genre")
                         .attr("stroke", "black");
 
                     svg.append("text") // y-label
@@ -137,7 +137,7 @@
                         .attr("x", 60 - height/2)
                         .attr("dy", ".75em")
                         .attr("transform", "rotate(-90)")
-                        .text("Global Sales (Millions)")
+                        .text("Average Metascore")
                         .attr("stroke", "black");
 
                     var targetData = data.find(d => d.Genre === 'Role-Playing'); // annotation line 1
@@ -185,6 +185,7 @@
         <p>Notice how the most sold genres differ between the highly rated ones! 
             Is this what you would have expected?</p>
 
+        <p>Navigate between charts using the buttons bellow.</p>
         <div class="navbar">
             <a href="CS416NarViz-A.html">1</a>
             <a href="CS416NarViz-B.html">2</a>
