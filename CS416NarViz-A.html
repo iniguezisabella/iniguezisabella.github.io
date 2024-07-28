@@ -12,6 +12,19 @@
             stroke: #000;
             stroke-width: 1px;
         }
+
+        .trendline {
+            stroke: red;
+            stroke-width: 2px;
+            fill: none;
+            marker-end: url(#arrow); 
+        }
+        .label {
+            font-family: sans-serif;
+            font-size: 12px;
+            fill: red;
+        }
+
         </style>
     
     </head>
@@ -36,18 +49,18 @@
                 const data = await d3.csv('https://iniguezisabella.github.io/data/meta_sales.csv');
                 
                 var width = 400;
-                var height = 350; // changed from 400
+                var height = 350;
                 var margin = 75;
 
                 var x = d3.scaleLinear()
                     .domain([0, 100]).nice() 
                     .range([0, width])
                 var y = d3.scaleLinear()
-                    .domain([0, 40]).nice() // changed from [0,100]
+                    .domain([0, 40]).nice()
                     .range([height, 0]);
 
                 var xaxis = d3.axisBottom(x).tickValues([20,40,60,80,100]).tickFormat(d3.format("~s"));
-                var yaxis = d3.axisLeft(y).tickValues([10,20,30,40]).tickFormat(d3.format("~s")); //  changed tick values from [20,40,60,80,100]
+                var yaxis = d3.axisLeft(y).tickValues([10,20,30,40]).tickFormat(d3.format("~s"));
 
                 const svg = d3.select("#chart")
                     .append("svg")
@@ -65,7 +78,7 @@
                     .attr("transform", "translate(0,"+(height)+")")
                     .call(xaxis);
                 
-                svg.selectAll(".dot")
+                svg.selectAll(".dot") // points
                     .data(data)
                     .enter()
                     .append("circle")
@@ -74,6 +87,33 @@
                     .attr("cy", d => y(d.Global_Sales))
                     .attr("r", 1)
                     .attr("fill", '#69b3a2');
+
+                svg.append("defs").append("marker") // arrow
+                    .attr("id", "arrow")
+                    .attr("viewBox", "0 0 10 10")
+                    .attr("refX", 5)
+                    .attr("refY", 5)
+                    .attr("markerWidth", 6)
+                    .attr("markerHeight", 6)
+                    .attr("orient", "auto-start-reverse")
+                    .append("path")
+                    .attr("d", "M 0 0 L 10 5 L 0 10 Z")
+                    .attr("fill", "red");
+                
+                svg.append("line") // trend line
+                        .attr("class", "trendline")
+                        .attr("x1", x(30))
+                        .attr("y1", y(20))
+                        .attr("x2", x(100))
+                        .attr("y2", y(70));
+                    
+                svg.append("text") // text label
+                    .attr("class", "label")
+                    .attr("x", x(100))
+                    .attr("y", y(70))
+                    .attr("dx", "10px")
+                    .attr("dy", "0px")
+                    .text("Upward Trend");
             }
         </script>
 
