@@ -91,17 +91,20 @@
                 svg.append("text") // x-label
                     .attr("class", "x label")
                     .attr("text-anchor", "end")
-                    .attr("x", width)
-                    .attr("y", height - 6)
-                    .text("Metascore");
+                    .attr("x", width/2) // not /2
+                    .attr("y", height + 6) // -6
+                    .text("Metascore")
+                    .attr("fill", "black");
 
                 svg.append("text") // y-label
                     .attr("class", "y label")
                     .attr("text-anchor", "end")
-                    .attr("y", 6)
+                    .attr("x", -6) // added this
+                    .attr("y", height/2) // 6
                     .attr("dy", ".75em")
                     .attr("transform", "rotate(-90)")
-                    .text("Global Sales (Millions)");
+                    .text("Global Sales (Millions)")
+                    .attr("fill", "black");
 
                 svg.append("defs").append("marker") // arrow
                     .attr("id", "arrow")
