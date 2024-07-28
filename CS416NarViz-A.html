@@ -88,6 +88,21 @@
                     .attr("r", 1)
                     .attr("fill", '#69b3a2');
 
+                svg.append("text") // x-label
+                    .attr("class", "x label")
+                    .attr("text-anchor", "end")
+                    .attr("x", width)
+                    .attr("y", height - 6)
+                    .text("Metascore");
+
+                svg.append("text") // y-label
+                    .attr("class", "y label")
+                    .attr("text-anchor", "end")
+                    .attr("y", 6)
+                    .attr("dy", ".75em")
+                    .attr("transform", "rotate(-90)")
+                    .text("Global Sales (Millions)");
+
                 svg.append("defs").append("marker") // arrow
                     .attr("id", "arrow")
                     .attr("viewBox", "0 0 10 10")
@@ -125,7 +140,6 @@
             <a href="CS416NarViz-A.html">1</a>
             <a href="CS416NarViz-B.html">2</a>
             <a href="CS416NarViz-C.html">3</a>
-            <a href="backup.html">test</a>
           </div>
     
           <p>Dataset: <a href="https://www.kaggle.com/datasets/gregorut/videogamesales">Kaggle</a> </p> 
