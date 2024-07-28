@@ -150,14 +150,14 @@
             
                 svg.append("line") // line
                         .attr("class", "trendline")
-                        .attr("x1", x(30))
+                        .attr("x1", x(100)) //changed from 30
                         .attr("y1", y(0.9)) 
                         .attr("x2", x(10))
                         .attr("y2", y(0.9)); 
                     
                 svg.append("text") // text label
                     .attr("class", "label")
-                    .attr("x", x(30))
+                    .attr("x", x(100))  //changed from 30
                     .attr("y", y(0.9))
                     .attr("dx", "15px")
                     .attr("dy", "0px")
