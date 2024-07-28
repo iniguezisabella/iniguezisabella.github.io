@@ -142,14 +142,14 @@
                     .attr("class", "annotation-line")
                     .attr("x1", targetX)
                     .attr("y1", targetY)
-                    .attr("x2", targetX)
+                    .attr("x2", targetX + 50)
                     .attr("y2", targetY - 50) // line length
                     .attr("stroke", "black")
                     .attr("stroke-width", 2);
 
                 svg.append("text") // label
                     .attr("class", "annotation-text")
-                    .attr("x", targetX)
+                    .attr("x", targetX + 50)
                     .attr("y", targetY - 60) // Adjust the position of the text as needed
                     .attr("text-anchor", "middle")
                     .text("Platform Games earn the most on average");
