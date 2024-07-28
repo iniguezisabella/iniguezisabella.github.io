@@ -108,15 +108,13 @@
                     .attr("transform", "rotate(-65)");
                 
                 svg.append("text") // x-label
-                    .attr("class", "x label")
                     .attr("text-anchor", "end")
                     .attr("x", width/2)
-                    .attr("y", height + 60) // added 20
+                    .attr("y", height + 60)
                     .text("Metascore")
                     .attr("stroke", "black");
 
                 svg.append("text") // y-label
-                    .attr("class", "y label")
                     .attr("text-anchor", "end")
                     .attr("y", - 50)
                     .attr("x", 60 - height/2)

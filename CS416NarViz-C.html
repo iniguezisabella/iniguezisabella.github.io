@@ -124,6 +124,22 @@
                         tooltip.transition().duration(500).style("opacity", 0);
                     });
 
+                    svg.append("text") // x-label
+                        .attr("text-anchor", "end")
+                        .attr("x", width/2)
+                        .attr("y", height + 60)
+                        .text("Metascore")
+                        .attr("stroke", "black");
+
+                    svg.append("text") // y-label
+                        .attr("text-anchor", "end")
+                        .attr("y", - 50)
+                        .attr("x", 60 - height/2)
+                        .attr("dy", ".75em")
+                        .attr("transform", "rotate(-90)")
+                        .text("Global Sales (Millions)")
+                        .attr("stroke", "black");
+
                     var targetData = data.find(d => d.Genre === 'Role-Playing'); // annotation line 1
                     var targetX = x(targetData.Genre) + x.bandwidth() / 2;
                     var targetY = y(targetData.metacritic);
