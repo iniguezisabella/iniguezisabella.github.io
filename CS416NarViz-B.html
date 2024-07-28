@@ -107,6 +107,24 @@
                     .attr("dy", ".15em")
                     .attr("transform", "rotate(-65)");
                 
+                svg.append("text") // x-label
+                    .attr("class", "x label")
+                    .attr("text-anchor", "end")
+                    .attr("x", width/2) // not /2
+                    .attr("y", height + 40) // 6
+                    .text("Metascore")
+                    .attr("stroke", "black");
+
+                svg.append("text") // y-label
+                    .attr("class", "y label")
+                    .attr("text-anchor", "end")
+                    .attr("y", - 40) // added this // switched x and y
+                    .attr("x", - height/2) // 6
+                    .attr("dy", ".75em")
+                    .attr("transform", "rotate(-90)")
+                    .text("Global Sales (Millions)")
+                    .attr("stroke", "black");
+                
                 const tooltip = d3.select("#tooltip"); // tooltip
 
                 svg.selectAll(".bar") // bars
