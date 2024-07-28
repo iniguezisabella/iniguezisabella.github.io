@@ -137,31 +137,31 @@
                     });
 
                 svg.append("defs").append("marker") // arrow
-                .attr("id", "arrow")
-                .attr("viewBox", "0 0 10 10")
-                .attr("refX", 0) 
-                .attr("refY", 5) // changed frmo 3
-                .attr("markerWidth", 6)
-                .attr("markerHeight", 6)
-                .attr("orient", "auto-start-reverse")
-                .append("path")
-                .attr("d", "M 0 0 L 10 5 L 0 10 Z")
-                .attr("fill", "red");
+                    .attr("id", "arrow")
+                    .attr("viewBox", "0 0 10 10")
+                    .attr("refX", 0) 
+                    .attr("refY", 5) // changed frmo 3
+                    .attr("markerWidth", 6)
+                    .attr("markerHeight", 6)
+                    .attr("orient", "auto-start-reverse")
+                    .append("path")
+                    .attr("d", "M 0 0 L 10 5 L 0 10 Z")
+                    .attr("fill", "red");
             
                 svg.append("line") // line
-                        .attr("class", "trendline")
-                        .attr("x1", x(0)) 
-                        .attr("y1", y(0.9)) 
-                        .attr("x2", x(250))
-                        .attr("y2", y(0.9)); 
+                    .attr("class", "trendline")
+                    .attr("x1", x(100)) 
+                    .attr("y1", y(0.9)) 
+                    .attr("x2", x(250))
+                    .attr("y2", y(0.9)); 
                     
                 svg.append("text") // text label
                     .attr("class", "label")
-                    .attr("x", x(100))  
+                    .attr("x", x(200))  
                     .attr("y", y(0.9))
                     .attr("dx", "15px")
                     .attr("dy", "0px")
-                    .text("Upward Trend");
+                    .text("Platform Games earn more on average");
             }
 
         </script>
