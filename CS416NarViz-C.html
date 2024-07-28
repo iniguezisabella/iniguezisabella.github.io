@@ -13,6 +13,7 @@
             stroke: #000;
             stroke-width: 1px;
         }
+
         .tooltip {
             position: absolute;
             background-color: white;
@@ -125,7 +126,7 @@
 
                     var targetData = data.find(d => d.Genre === 'Role-Playing'); // annotation line 1
                     var targetX = x(targetData.Genre) + x.bandwidth() / 2;
-                    var targetY = y(targetData.Global_Sales);
+                    var targetY = y(targetData.metacritic);
 
                     svg.append("line") // line
                         .attr("class", "annotation-line")
@@ -145,7 +146,7 @@
 
                     var targetData = data.find(d => d.Genre === 'Platform'); // annotation line 2
                     var targetX = x(targetData.Genre) + x.bandwidth() / 2;
-                    var targetY = y(targetData.Global_Sales);
+                    var targetY = y(targetData.metacritic);
 
                     svg.append("line") // line
                         .attr("class", "annotation-line")
