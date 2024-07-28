@@ -9,7 +9,9 @@
         div {text-align: center;}
 
         .bar {
-            fill: #69b3a2;
+            /* fill: #69b3a2; */
+            stroke: #000;
+            stroke-width: 1px;
         }
         .tooltip {
             position: absolute;
@@ -41,6 +43,21 @@
         <script>
             async function init(){
                 const data = await d3.csv('https://iniguezisabella.github.io/data/genre_ratings.csv');
+
+                const colorMap = { // 12
+                    'Action': '#4682B4',
+                    'Sports': '#FFA500',
+                    'Shooter': '#228B22',
+                    'Role-Playing': '#DC143C',
+                    'Platform': '#800080',
+                    'Misc': '#A52A2A',
+                    'Racing': '#FFC0CB',
+                    'Fighting': '#008080',
+                    'Simulation': '#FFD700',
+                    'Puzzle': '#4B0082',
+                    'Adventure': '#FF7F50',
+                    'Strategy': '#708090'
+                };
 
                 var width = 500;
                 var height = 250;
@@ -86,6 +103,7 @@
                     .attr("y", d => y(d.metacritic))
                     .attr("width", x.bandwidth())
                     .attr("height", d => height - y(d.metacritic))
+                    .attr("fill", d => colorMap[d.Genre])
                     .on("mouseover", (event, d) => {
                         tooltip.transition().duration(200).style("opacity", .9);
                         tooltip.html(`Genre: ${d.Genre}<br>Meta: ${d.metacritic}`)
