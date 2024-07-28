@@ -132,15 +132,15 @@
                         .attr("class", "annotation-line")
                         .attr("x1", targetX)
                         .attr("y1", targetY)
-                        .attr("x2", targetX)
-                        .attr("y2", targetY - 50)
+                        .attr("x2", targetX + 50)
+                        .attr("y2", targetY - 10)
                         .attr("stroke", "black")
                         .attr("stroke-width", 2);
 
                     svg.append("text") // text label
                         .attr("class", "annotation-text")
-                        .attr("x", targetX)
-                        .attr("y", targetY - 60)
+                        .attr("x", targetX + 100)
+                        .attr("y", targetY - 10)
                         .attr("text-anchor", "middle")
                         .text("Role-Playing games are more critically acclaimed on average!");
 
@@ -153,14 +153,14 @@
                         .attr("x1", targetX)
                         .attr("y1", targetY)
                         .attr("x2", targetX + 50)
-                        .attr("y2", targetY - 10)
+                        .attr("y2", targetY - 50)
                         .attr("stroke", "black")
                         .attr("stroke-width", 2);
 
                     svg.append("text") // text label
                         .attr("class", "annotation-text")
-                        .attr("x", targetX + 50)
-                        .attr("y", targetY - 40) // -60
+                        .attr("x", targetX + 100) // 50
+                        .attr("y", targetY - 50) // -60
                         .attr("text-anchor", "middle")
                         .text("Though usually earning more, Platform games aren't as critically acclaimed...");
             }
