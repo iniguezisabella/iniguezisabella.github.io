@@ -46,7 +46,7 @@
 
         <script>
             async function init(){
-                const data = await d3.csv('https://iniguezisabella.github.io/data/genre_sales.csv');
+                const data = await d3.csv('https://iniguezisabella.github.io/data/genre_sales_mean.csv'); // changd to mean
 
                 const colorMap = { // 12
                     'Action': '#4682B4',
@@ -70,7 +70,7 @@
                     .range([0, width])
                     .padding(0.2);
                 var y = d3.scaleLinear()
-                    .domain([0, 1800])
+                    .domain([0, 1]) //.domain([0, 1800]), to adjust for mean csv
                     .nice()
                     .range([height, 0]);
                 var margin = 75;
