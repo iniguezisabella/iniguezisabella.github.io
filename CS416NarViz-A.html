@@ -91,8 +91,8 @@
                 svg.append("defs").append("marker") // arrow
                     .attr("id", "arrow")
                     .attr("viewBox", "0 0 10 10")
-                    .attr("refX", 120) // changed frmo 90
-                    .attr("refY", 12) // changed from 5
+                    .attr("refX", 180) // changed frmo 90
+                    .attr("refY", 15) // changed from 5
                     .attr("markerWidth", 6)
                     .attr("markerHeight", 6)
                     .attr("orient", "auto-start-reverse")
@@ -102,15 +102,15 @@
                 
                 svg.append("line") // trend line
                         .attr("class", "trendline")
-                        .attr("x1", x(20))
-                        .attr("y1", y(5))
-                        .attr("x2", x(80))
-                        .attr("y2", y(12));
+                        .attr("x1", x(30))
+                        .attr("y1", y(2)) // dropped by 3
+                        .attr("x2", x(90))
+                        .attr("y2", y(9)); // dropped by 3
                     
                 svg.append("text") // text label
                     .attr("class", "label")
-                    .attr("x", x(80))
-                    .attr("y", y(12))
+                    .attr("x", x(90))
+                    .attr("y", y(9)) // dropped by 3
                     .attr("dx", "10px")
                     .attr("dy", "0px")
                     .text("Upward Trend");
