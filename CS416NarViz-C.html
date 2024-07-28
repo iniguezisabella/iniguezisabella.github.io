@@ -143,7 +143,7 @@
                         .attr("text-anchor", "middle")
                         .text("Role-Playing games are more critically acclaimed on average!");
 
-                    var targetData = data.find(d => d.Genre === 'Role-Playing'); // annotation line 1
+                    var targetData = data.find(d => d.Genre === 'Platform'); // annotation line 1
                     var targetX = x(targetData.Genre) + x.bandwidth() / 2;
                     var targetY = y(targetData.Global_Sales);
 
