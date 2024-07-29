@@ -76,7 +76,7 @@
                     .range([0, width])
                     .padding(0.2);
                 var y = d3.scaleLinear()
-                    .domain([68, d3.max(data, d => d.meta_mean)]) // metacritic
+                    .domain([68, d3.max(data, d => d.metaMean)]) // metacritic
                     .nice()
                     .range([height, 0]);
                 var margin = 75;
@@ -110,17 +110,17 @@
                     .append("rect")
                     .attr("class", "bar")
                     .attr("x", d => x(d.Genre))
-                    .attr("y", d => y(d.meta_mean)) // metacritic
+                    .attr("y", d => y(d.metaMean)) // metacritic
                     .attr("width", x.bandwidth())
-                    .attr("height", d => height - y(d.meta_mean)) // metacritics
+                    .attr("height", d => height - y(d.metaMean)) // metacritics
                     .attr("fill", d => colorMap[d.Genre])
                     .on("mouseover", (event, d) => {
                         tooltip.transition().duration(200).style("opacity", .9);
                         tooltip.html(`Genre: ${d.Genre}
-                                    <br>Mean Metascore: ${d.meta_mean}) // metacritic
-                                    <br>Median Metascore: ${d.meta_median}
-                                    <br>Max Metascore: ${d.meta_max}
-                                    <br>Min Metascore: ${d.meta_min}`)
+                                    <br>Mean Metascore: ${d.metaMean}
+                                    <br>Median Metascore: ${d.metaMedian}
+                                    <br>Max Metascore: ${d.metaMax}
+                                    <br>Min Metascore: ${d.metaMin}`)
                             .style("left", (event.pageX + 5) + "px")
                             .style("top", (event.pageY - 28) + "px");
                     })
@@ -146,7 +146,7 @@
 
                     var targetData = data.find(d => d.Genre === 'Role-Playing'); // annotation line 1
                     var targetX = x(targetData.Genre) + x.bandwidth() / 2;
-                    var targetY = y(targetData.meta_mean); // metacritic
+                    var targetY = y(targetData.metaMean); // metacritic
 
                     svg.append("line") // line
                         .attr("class", "annotation-line")
@@ -166,7 +166,7 @@
 
                     var targetData = data.find(d => d.Genre === 'Platform'); // annotation line 2
                     var targetX = x(targetData.Genre) + x.bandwidth() / 2;
-                    var targetY = y(targetData.meta_mean); // metacritic
+                    var targetY = y(targetData.metaMean); // metacritic
 
                     svg.append("line") // line
                         .attr("class", "annotation-line")

@@ -1,4 +1,4 @@
-Genre,meta_mean,meta_max,meta_min,meta_median
+Genre,metaMean,metaMax,metaMin,metaMedian
 Role-Playing,79.64,94.0,35.0,82.0
 Racing,78.44,96.0,37.0,80.0
 Sports,77.66,94.0,45.0,80.0
