@@ -14,7 +14,7 @@ When I’m not diving into data, you can find me browsing a books store, playing
 
 Feel free to explore my page, connect with me on LinkedIn, or reach out directly—I’d love to connect!
 
-Some fun facts!
+Some fun facts! 
 -   My highschool nicknames were: Inquisitive Isabella and Rapunzel 
 -   My wardobe is almost entirely grayscale (mainly black)
 -   My favorite color is green! 🌱
