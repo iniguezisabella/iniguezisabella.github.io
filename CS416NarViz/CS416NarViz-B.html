@@ -1,0 +1,205 @@
+<html>
+    <script src="https://d3js.org/d3.v6.min.js"></script>
+    <head>
+        <style>
+        h1 {text-align: center;}
+        h2 {text-align: center;}
+        h4 {text-align: center;}
+        p {text-align: center;}
+        div {text-align: center;}
+
+        .bar {
+            /* fill: #69b3a2; */
+            stroke: #000;
+            stroke-width: 1px;
+        }
+
+        .tooltip {
+            position: absolute;
+            background-color: white;
+            border: 1px solid #ccc;
+            padding: 5px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.2s ease;
+            text-align: left;
+        }
+
+        .annotation-line {
+            stroke: black;
+            stroke-width: 2px;
+        }
+        .annotation-text {
+            font-family: sans-serif;
+            font-size: 12px;
+            fill: black;
+        }
+
+        </style>
+    
+    </head>
+    <body onload='init()'>
+        <h1>What is the recipe to a best selling video game?</h1>
+        <h4>CS 416 Narrative Visualization by Isabella Iniguez</h4>
+        <h3>Slide 2: Average Global Sales by Genre</h3>
+        <p>One large way games differ is on their genre. A player won't go into a shooter game expecting the same 
+            experience as a puzzle game, so each game's financial success may vary between the constraints and/or 
+            allowances of the particular genre it falls into.
+        </p>
+        <p> Here in this barplot, we can see the trends in what video game genres tend to sell the most. </p>
+            <p>Hover over each bar to see how the sales break down. Notice how different genres find more 
+                financial success in different regions!</p>
+
+            <div id="chart"></div>
+            <div id="tooltip" class="tooltip"></div>
+
+        <script>
+            async function init(){
+                const data = await d3.csv('https://iniguezisabella.github.io/CS416NarViz/data/genre_sales_mean.csv'); // changd to mean
+
+                const colorMap = { // 12
+                    'Action': '#4682B4',
+                    'Sports': '#FFA500',
+                    'Shooter': '#228B22',
+                    'Role-Playing': '#DC143C',
+                    'Platform': '#800080',
+                    'Misc': '#A52A2A',
+                    'Racing': '#FFC0CB',
+                    'Fighting': '#008080',
+                    'Simulation': '#FFD700',
+                    'Puzzle': '#4B0082',
+                    'Adventure': '#FF7F50',
+                    'Strategy': '#708090'
+                };
+
+                var width = 500;
+                var height = 250;
+                var x = d3.scaleBand()
+                    .domain(data.map(d => d.Genre))
+                    .range([0, width])
+                    .padding(0.2);
+                var y = d3.scaleLinear()
+                    .domain([0, 1]) //.domain([0, 1800]), to adjust for mean csv
+                    .nice()
+                    .range([height, 0]);
+                var margin = 75;
+
+                const svg = d3.select("#chart")
+                    .append("svg")
+                    .attr("width", width + 2*margin)
+                    .attr("height", height + 2*margin)
+                    .append("g")
+                    .attr("transform", "translate("+margin+","+margin+")")
+
+                svg.append("g")
+                    .attr("class", "y-axis")
+                    .call(d3.axisLeft(y));
+
+                svg.append("g")
+                    .attr("class", "x-axis")
+                    .attr("transform", "translate(0,"+(height)+")")
+                    .call(d3.axisBottom(x))
+                    .selectAll("text")  // tilt x-labels
+                    .style("text-anchor", "end")
+                    .attr("dx", "-.8em")
+                    .attr("dy", ".15em")
+                    .attr("transform", "rotate(-65)");
+                
+                svg.append("text") // x-label
+                    .attr("text-anchor", "end")
+                    .attr("x", width/2)
+                    .attr("y", height + 60)
+                    .text("Genre")
+                    .attr("stroke", "black");
+
+                svg.append("text") // y-label
+                    .attr("text-anchor", "end")
+                    .attr("y", - 50)
+                    .attr("x", 60 - height/2)
+                    .attr("dy", ".75em")
+                    .attr("transform", "rotate(-90)")
+                    .text("Average Global Sales (Millions)")
+                    .attr("stroke", "black");
+                
+                const tooltip = d3.select("#tooltip"); // tooltip
+
+                svg.selectAll(".bar") // bars
+                    .data(data)
+                    .enter()
+                    .append("rect")
+                    .attr("class", "bar")
+                    .attr("x", d => x(d.Genre))
+                    .attr("y", d => y(d.Global_Sales))
+                    .attr("width", x.bandwidth())
+                    .attr("height", d => height - y(d.Global_Sales))
+                    .attr("fill", d => colorMap[d.Genre])
+                    .on("mouseover", (event, d) => {
+                        tooltip.transition().duration(200).style("opacity", .9);
+                        tooltip.html(`Genre: ${d.Genre}
+                                    <br>Global Sales: ${d.Global_Sales}M
+                                    <br>North America Sales: ${d.NA_Sales}M
+                                    <br>Europe Sales: ${d.EU_Sales}M
+                                    <br>Japan Sales: ${d.JP_Sales}M 
+                                    <br>Other Sales: ${d.Other_Sales}M`)
+                            .style("left", (event.pageX + 5) + "px")
+                            .style("top", (event.pageY - 28) + "px");
+                    })
+                    .on("mouseout", () => {
+                        tooltip.transition().duration(500).style("opacity", 0);
+                    });
+
+                var targetData = data.find(d => d.Genre === 'Platform'); // annotation line 1
+                var targetX = x(targetData.Genre) + x.bandwidth() / 2;
+                var targetY = y(targetData.Global_Sales);
+
+                svg.append("line") // line
+                    .attr("class", "annotation-line")
+                    .attr("x1", targetX)
+                    .attr("y1", targetY)
+                    .attr("x2", targetX + 50)
+                    .attr("y2", targetY - 50)
+                    .attr("stroke", "black")
+                    .attr("stroke-width", 2);
+
+                svg.append("text") // text label
+                    .attr("class", "annotation-text")
+                    .attr("x", targetX + 50)
+                    .attr("y", targetY - 60)
+                    .attr("text-anchor", "middle")
+                    .text("Platform games earn the most on average!");
+
+                var targetData = data.find(d => d.Genre === 'Role-Playing'); // annotation line 2
+                var targetX = x(targetData.Genre) + x.bandwidth() / 2;
+                var targetY = y(targetData.Global_Sales);
+
+                svg.append("line") // line
+                    .attr("class", "annotation-line")
+                    .attr("x1", targetX)
+                    .attr("y1", targetY)
+                    .attr("x2", targetX + 50)
+                    .attr("y2", targetY - 50)
+                    .attr("stroke", "black")
+                    .attr("stroke-width", 2);
+
+                svg.append("text") // text label
+                    .attr("class", "annotation-text")
+                    .attr("x", targetX + 50)
+                    .attr("y", targetY - 60)
+                    .attr("text-anchor", "middle")
+                    .text("Keep this placement in mind...");
+            }
+
+        </script>
+        <p>We have some fair leaders, but how do their ratings compare?</p>
+
+        <p>Navigate between charts using the buttons bellow.</p>
+        <div class="navbar">
+            <a href="CS416NarViz/CS416NarViz-A.html">1</a>
+            <a href="CS416NarViz/CS416NarViz-B.html">2</a>
+            <a href="CS416NarViz/CS416NarViz-C.htmll">3</a>
+          </div>
+    
+          <p>Dataset: <a href="https://www.kaggle.com/datasets/gregorut/videogamesales">Video Game Sales Dataset | Kaggle</a> </p> 
+    </body>
+</html>
