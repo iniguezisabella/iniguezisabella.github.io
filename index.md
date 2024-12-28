@@ -7,3 +7,4 @@ layout: default
 In progress :)
 
 theme test: [temp file](./temp.html).
+page test: [temp file](./test.html).
