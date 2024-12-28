@@ -12,13 +12,13 @@ With a strong foundation in mathematics and an analytical mindset, I specialize 
 
 I’m driven to apply these skills to real-world challenges, currently seeking entry-level opportunities in analytics, data science, or related fields where I can contribute to impactful projects, grow as a professional, and collaborate with diverse teams!
 
-When I’m not diving into data, you can find me browsing a books store, playing video games, or creating art!
+When I’m not diving into data, you can find me browsing a book store, playing video games, or creating art!
 
 Feel free to explore my page, connect with me on LinkedIn, or reach out directly—I’d love to connect!
 
 Some fun facts! 
 -   My highschool nicknames were: Inquisitive Isabella and Rapunzel 
--   My wardobe is almost entirely grayscale (mainly black)
+-   My wardrobe is almost entirely grayscale (mainly black)
 -   My favorite color is green! 🌱
 
 * * *
