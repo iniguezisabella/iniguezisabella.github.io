@@ -16,6 +16,8 @@ When I’m not diving into data, you can find me browsing a book store, playing 
 
 Feel free to explore my page, connect with me on LinkedIn, or reach out directly—I’d love to connect!
 
+Here's my resume: ![RESUME PDF (To be added)]()  
+
 Some fun facts! 
 -   My highschool nicknames were: Inquisitive Isabella and Rapunzel 
 -   My wardrobe is almost entirely grayscale (mainly black)
