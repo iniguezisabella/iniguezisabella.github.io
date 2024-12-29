@@ -1,3 +1,7 @@
+---
+layout: default
+---
+
 # Projects
 
 #### A collection of my projects during my time at UIUC!
