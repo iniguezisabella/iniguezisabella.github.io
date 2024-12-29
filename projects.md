@@ -4,6 +4,10 @@
 
 ## Undergraduate Work
 
+### STAT 207
+
+-   [Final Project](projects/STAT207_FinalProject.html) - In this final project, I worked with a group to develop a predictive model that aims to effectively predict penguin clutch completion for new datasets. Utilized Jupyter Notebooks, Visual Studio Code, and various Python libraries (e.g. NumPy, Scikit-Learn).
+
 ### CS 416 - Data Visualization
 
 -   [Video Game Tableau Visualization (LINK N/A)]()
