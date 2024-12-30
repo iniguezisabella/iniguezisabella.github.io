@@ -10,7 +10,7 @@ layout: default
 
 ### STAT 207
 
--   [Final Project](projects/STAT207_FinalProject.html) - In this final project, I worked with a group to develop a predictive model that aims to effectively predict penguin clutch completion for new datasets. Utilized Jupyter Notebooks, Visual Studio Code, and various Python libraries (e.g. NumPy, Scikit-Learn).
+-   [Final Project](projects/STAT207_FinalProject.html) - In this final project, I worked with a group to develop a logistic regression model that aims to effectively predict penguin clutch completion for new datasets. Utilized Jupyter Notebooks, Visual Studio Code, and various Python libraries (e.g. NumPy, Scikit-Learn).
 
 [THEME TEST PAGE](projects/Final_Project2.html)
 
