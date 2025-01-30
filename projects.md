@@ -45,4 +45,4 @@ Labs with unfinished reports to be added!
 
 ## Graduate Work
 
-I'll have some to add in the Spring! :)
+I'll have some to add in the Fall! :)
