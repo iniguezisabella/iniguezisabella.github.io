@@ -4,7 +4,9 @@ layout: default
 
 ## Hello! Hello! Who am I? Great question!
 
-I'm **Isabella**, a Computer Science Master's Student at UIUC! 
+I'm **Isabella**, an Applied Mathematics major at UIUC! 
+
+_(Computer Science Master's Student starting the fall!)_
 
 ![Professional Portrait](assets/images/50402207_07002_0094_Medium_cropped.jpg)  
 
@@ -25,6 +27,6 @@ Some fun facts!
 
 * * *
 
-Webstite in progress :)
+Website in progress :)
 
 test: [temp file](./temp.html)
