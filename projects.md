@@ -16,7 +16,8 @@ layout: default
 
 ### CS 416 - Data Visualization
 
--   [Video Game Tableau Visualization (LINK N/A)]()
+-   [Video Game Tableau Visualization](iniguezisabella.github.io/projects/VidGameTableau.html)
+
 -   [Video Game Narrative Visualization](./CS416NarViz/CS416NarViz-A.html)
 
 Integrated and analyzed datasets on video game sales and ratings, creating insightful visualizations using Tableau and JavaScript (D3.js).
