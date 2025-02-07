@@ -12,11 +12,11 @@ layout: default
 
 -   [Final Project](projects/STAT207_FinalProject.html) - In this final project, I worked with a group to develop a logistic regression model that aims to effectively predict penguin clutch completion for new datasets. Utilized Jupyter Notebooks, Visual Studio Code, and various Python libraries (e.g. NumPy, Scikit-Learn).
 
-[THEME TEST PAGE](projects/Final_Project2.html)
+[THEME TEST PAGE (IGNORE)](projects/Final_Project2.html)
 
 ### CS 416 - Data Visualization
 
--   [Video Game Tableau Visualization](iniguezisabella.github.io/projects/VidGameTableau.html)
+-   [Video Game Tableau Visualization](projects/VidGameTableau.html)
 
 -   [Video Game Narrative Visualization](./CS416NarViz/CS416NarViz-A.html)
 
