@@ -8,13 +8,15 @@ layout: default
 
 ## Undergraduate Work
 
-### STAT 207
+### STAT 207 - Data Science Exploration
+
+Covered the data science pipeline from hypothesis formulation to data collection, management, analysis, and reporting, with topics including data preprocessing, visualization, probability models, hypothesis testing, regression modeling, and machine learning for high-dimensional data. Implemented these methods using Python and Git version control.
 
 -   [Final Project](projects/STAT207_FinalProject.html) - In this final project, I worked with a group to develop a logistic regression model that aims to effectively predict penguin clutch completion for new datasets. Utilized Jupyter Notebooks, Visual Studio Code, and various Python libraries (e.g. NumPy, Scikit-Learn).
 
-[THEME TEST PAGE (IGNORE)](projects/Final_Project2.html)
-
 ### CS 416 - Data Visualization
+
+Explored how databases, computer graphics, and perceptual psychology enhance data visualization to improve user understanding of large datasets. E.g. effective chart selection and construction, dashboard organization, and designing for user engagement and interaction.
 
 -   [Video Game Tableau Visualization](projects/VidGameTableau.html)
 
@@ -42,7 +44,11 @@ Applied classical and modern data modeling techniques, including feature enginee
 
 -   [MLB Swing Probability Model](projects/lab-09-notebook.html) - In this report, we aim to develop a well calibrated probability model that estimates the probability of inducing a batter to swing given the characteristics of a pitch thrown, in addition to other information such as game situation, for a particular pitcher.
 
-Labs with unfinished reports to be added!
+Labs without reports to be added!
+
+### STAT 385 - Statistical Programming Methods
+
+-   [Video Game Sales Shiny App](projects/vgsales-app.zip) - The purpose of this application is to provide an easy and quick way to compare video game sales trends over the years. The user is able to specify a publisher, platform and genre to filter the data for more specific trends.
 
 ## Graduate Work
 

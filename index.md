@@ -29,4 +29,6 @@ Website in progress :)
 
 * * *
 
+[THEME TEST PAGE (IGNORE)](projects/Final_Project2.html)
+
 test: [temp file](./temp.html)
