@@ -8,7 +8,7 @@ I'm **Isabella**, an Applied Mathematics major at UIUC!
 
 _(Computer Science Master's Student starting the fall!)_
 
-![Professional Portrait](assets/images/50402207_07002_0094_Medium_cropped.jpg)  
+![Professional Portrait](assets/images/ProfPortrait.jpg)  
 
 With a strong foundation in mathematics and an analytical mindset, I specialize in uncovering meaningful insights from complex datasets. My academic work and projects have equipped me with experience in machine learning, data visualization, and statistical modeling. In addition, I bring a unique perspective shaped by resilience and adaptability. As a first-generation college graduate, I’ve honed my ability to navigate challenges, learn on the fly, and find creative solutions—all of which I bring to the professional world.
 

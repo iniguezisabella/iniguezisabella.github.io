@@ -4,9 +4,9 @@ layout: default
 
 # Certifications
 
-### STAT 207 - Data Science Exploration
+### [UIUC Certificate in Data Science](https://stat.illinois.edu/academics/undergraduate/minors/certificate-data-science)
 
-<embed src="assets/Certs/UIUC_DSCert.pdf" width="800px" height="2100px" />
+![DS Cert](assets/images/UIUC_DSCert.png)
 
 Relevant Courses Taken:
 *   STAT 107: Data Science Discovery 
