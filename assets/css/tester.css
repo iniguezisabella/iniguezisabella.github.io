@@ -5,8 +5,7 @@ header {
     display: flex;
     align-items: center;      /* Vertically center items */
     justify-content: space-between; /* Space between h1 and nav */
-    padding: 1.25rem 2rem;       /* Optional: add some padding */
-    /* padding: 1rem; */
+    padding: 1rem 2rem;       /* Optional: add some padding */
 }
 header h1 {
     margin: 0;                /* Remove default margin */
@@ -24,7 +23,7 @@ header h1 .expand {
 }
 header h1:hover, header h1:hover .expand {
     color: #b5e853;
-    width: 6.5em; /* Adjust for "Iniguez" text */
+    width: 6.5em; /* Adjust as needed for "Iniguez" */
     opacity: 1;
 }
 header h1 a{
@@ -33,20 +32,19 @@ header h1 a{
 }
 header nav a {
     margin-left: 1.5rem;      /* Space between nav links */
-    text-decoration: none;    /* Remove underline */
+    text-decoration: none;    /* Optional: remove underline */
 }
 nav {
     margin-top: 0.5rem; /* 0.5rem; */
 }
 nav a {
     font-family: 'Times New Roman', Times, serif;
-    font-weight: bold;
     color: #b5e853; /* color: #fff; */
     text-decoration: none;
     margin: 0 1rem;
     padding: 0.5rem 1rem;
     border-radius: 4px 4px 0 0;
-    /* background: #444; */
+    background: #444;
     transition: background 0.2s;
 }
 nav a:hover, nav a.active {
@@ -56,38 +54,33 @@ nav a:hover, nav a.active {
 
 /* main text styling */
 main {
-
+    /* padding: 2rem; */
     max-width: 900px;
-    margin: 1rem auto 1rem; /* match header and footer */
+    /* margin: 2rem auto; */
+    margin: 0rem auto; /* Adjusted to match header and footer */
+    background: #969696; /*fff*/
     border-radius: 8px;
-    /* background: #969696;  */
-    /* for testing borders: */
     /* background: #663a00; */
 }
 body {
     font-family: 'Times New Roman', Times, serif;
     margin: 0;
     padding: 0;
-    background: #969696; /* #f4f4f4 */
+    background: #969696;
 }
-main a {
-    text-decoration: none;    /* Remove underline */
-    color: #447604;
+
+/* footer bar styling */
+footer {
+    background: #181818;
+    color: #fff;
+    text-align: center;
+    padding: 1rem;
+    position: fixed;
+    width: 100%;
+    bottom: 0;
 }
 
 /* flex page styling */
-.pageheader-h1 {
-    font-family: 'Times New Roman', Times, serif;
-    color: #181818;
-    background: #fff;
-    border-radius: 8px;
-    border: 2px solid #969696;
-    padding: 0.5em 1em;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-    margin-bottom: 1rem;
-    margin-top: 0rem;
-    display: inline-block; /* keeps border tight around text */
-}
 
 .main-flex {
     display: flex;
@@ -121,17 +114,19 @@ main a {
     /* margin-top: 1rem; */
     margin-top: 1rem;
     width: 100%;
-    border-radius: 8px;
+    border-radius: 8px; /* 8px; */
     /* display: flex; */
     text-align: center; 
 }
 
-/* footer bar styling */
-footer {
-    background: #181818;
-    color: #fff;
-    text-align: center;
-    padding: 1rem;
-    position: bottom; /* fixed */
-    bottom: 0;
+.pageheader-h1 {
+    font-family: 'Times New Roman', Times, serif;
+    color: #181818; /* or any color you prefer */
+    background: #fff;
+    border-radius: 8px;
+    border: 2px solid #969696; /* matches your modular block border/gap color */
+    padding: 0.5em 1em;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    margin-bottom: 1rem;
+    display: inline-block; /* keeps border tight around text */
 }
