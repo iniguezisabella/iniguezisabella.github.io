@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Iniguez Portfolio</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+    <header>
+        <h1>
+            <a href="index.html">II<span class="expand">niguez</span></a>
+        </h1>
+        <nav>
+            <a href="index.html">About</a>
+            <a href="projects.html">Projects</a>
+            <a href="certs.html">Certificates</a>
+        </nav>
+    </header>
+    <main>
+    <h1 class="pageheader-h1" id="project-title"></h1>
+    <div class="main-flex" id="project-content">
+        <!-- Project HTML will be loaded here -->
+    </div>
+</main>
+    <footer>
+        &copy; 2025 Iniguez Isabella
+    </footer>
+</body>
+</html>
+
+<script>
+    // Get query parameters
+    const params = new URLSearchParams(window.location.search);
+    const name = params.get('name') || 'Project';
+    const file = params.get('file');
+
+    // Set project name
+    document.getElementById('project-title').textContent = name;
+
+    // Load project HTML if file param exists
+    if (file) {
+        const iframe = document.createElement('iframe');
+        iframe.src = file;
+        iframe.width = "100%";
+        iframe.height = "600";
+        iframe.style.border = "none";
+        document.getElementById('project-content').appendChild(iframe);
+    } else {
+        document.getElementById('project-content').textContent = "No project file specified.";
+    }
+</script>
