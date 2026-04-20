@@ -95,10 +95,12 @@ main a {
     align-items: flex-start;
 }
 
-/* .main-left {
-    flex: 2;
-    min-width: 0;
-} */
+.main-flex-grid {
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+    padding: 0.25rem; 
+}
 
 .main-left,
 .main-right {
@@ -132,6 +134,109 @@ footer {
     color: #fff;
     text-align: center;
     padding: 1rem;
-    position: bottom; /* fixed */
+    position: bottom;
     bottom: 0;
+    /* position: fixed;  */
+    /* bottom: 0;  */
+    /* left: 0;  */
+    /* right: 0; */
+}
+
+/* project page styling */
+#tag-search-container {
+    position: relative;
+    width: 300px;
+}
+#tag-search {
+    width: 100%;
+    padding: 0.5em;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    font-size: 1em;
+}
+#tag-suggestions {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: #fff;
+    border: 1px solid #b5e853;
+    border-top: none;
+    z-index: 10;
+    max-height: 200px;
+    overflow-y: auto;
+    display: none;
+}
+.tag-suggestion {
+    padding: 0.5em 1em;
+    cursor: pointer;
+}
+.tag-suggestion:hover {
+    background: #b5e853;
+    color: #333;
+}
+
+#active-tags .active-tag {
+  display: inline-block;
+  background: #444;
+  color: #fff;
+  margin: 0.2em;
+  padding: 0.3em 0.8em;
+  border-radius: 16px;
+  cursor: pointer;
+}
+
+#project-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1em;
+}
+.project-box {
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  padding: 1em;
+  width: 250px;
+  cursor: pointer;
+  transition: box-shadow 0.2s;
+}
+.project-box:hover {
+  box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+}
+.project-title {
+  font-weight: bold;
+  margin-bottom: 0.5em;
+  font-size: 1.1em;
+}
+.project-img {
+  width: 100%;
+  border-radius: 8px;
+}
+.project-desc {
+  margin: 0.5em 0;
+}
+.project-tags .tag {
+  background: #b5e853;
+  color: #333;
+  border-radius: 8px;
+  padding: 0.2em 0.6em;
+  margin: 0.1em;
+  font-size: 0.9em;
+  display: inline-block;
+}
+
+#project-summary {
+    background: #fff;
+    border-radius: 8px;
+    /* padding: 1rem; */
+    /* margin: 1rem 0; */
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+#project-summary h2 {
+    margin-top: 0;
+}
+
+/* Ensure spacing between the summary and the project display */
+#project-content {
+    margin-top: 1rem;
 }
