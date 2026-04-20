@@ -33,7 +33,15 @@ const projects = [
         tags: ["Undergraduate", "Data Analysis", "Python", "Pandas", "Numpy", "Matplotlib", "Seaborn", "Scikit-Learn", "Data Visualization", "Data Science", "Machine Learning", "Data Preprocessing", "Model Calibration", "Logistic Regression", "Cross-Validation"],
         link: "projectDisplay.html?name=MLB%20Swing%20Probability%20Model&file=projects/CS307/Lab9/lab-09-notebook.html"
     },
-    
+    {
+        name: "Video Game Visualization",
+        image: "assets/images/proj_ims/VGTableau_IMG.png",
+        summary: "<ul><li> Analyzed and visualized large video game sales and ratings data to identify market trends. </li><li> Created an interactive dashboard using Tableau. </li><li> Datasets available via Kaggle: <a href=\"https://www.kaggle.com/datasets/gregorut/videogamesales\">Video Game Sales Datas</a>, <a href=\"https://www.kaggle.com/datasets/dem0nking/video-game-ratings-dataset\">Video Game Ratings Data </a> </li></ul>",        
+        description: "Analysis of video game sales and ratings data, with interactive visualizations.",
+        tags: ["Undergraduate", "Data Analysis", "Data Visualization", "Data Preprocessing", "Tableau"],
+        // link: "projectDisplay.html?name=Video%20Game%20Visualizations&file=projects/CS416NarViz/CS416NarViz-A.html"
+        link: "projectDisplay.html?name=Video%20Game%20Visualization&file=projects/VidGameTableau.html"
+    },
     // {
     //     name: "Temperature Model",
     //     image: "assets/images/proj_ims/TempMod_IMG.png",
