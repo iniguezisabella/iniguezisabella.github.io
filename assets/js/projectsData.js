@@ -28,7 +28,7 @@ const projects = [
     {
         name: "MLB Swing Probability Model",
         image: "assets/images/proj_ims/SwiProbMod_IMG.png",
-        summary: "<ul><li> Developed tuning pipeline to find the best cross-validated, calibrated, logistic regression model. </li><li> Analyzed and interpreted a comprehensive set of features from 2,000+ pitches, including spatial data. </li><li> Model achieved a final test error of 4.85% in predicting the probability of inducing a swing. </li><li> Download full lab <a href=\"projects/CS307/Lab9/Lab9.zip\" download> HERE </a> </li><li> Note: The dataset originally used in this project is no longer accessible </li></ul>",
+        summary: "<ul><li> Developed tuning pipeline to find the best cross-validated, calibrated, logistic regression model. </li><li> Analyzed and interpreted a comprehensive set of features from 2,000+ pitches, including spatial data. </li><li> Model achieved a final test error of 4.85% in predicting the probability of inducing a swing. </li><li> Download full lab <a href=\"projects/CS307/Lab9/Lab9.zip\" download> HERE </a> </li><li> Note: The dataset originally used in this project is no longer accessible. There was also an error in the lab heading, the correct heading is shown below but may not be reflected in the download. </li></ul>",
         description: "Estimates probability of a batter swinging based on pitch characteristics.",
         tags: ["Undergraduate", "Data Analysis", "Python", "Pandas", "Numpy", "Matplotlib", "Seaborn", "Scikit-Learn", "Data Visualization", "Data Science", "Machine Learning", "Data Preprocessing", "Model Calibration", "Logistic Regression", "Cross-Validation"],
         link: "projectDisplay.html?name=MLB%20Swing%20Probability%20Model&file=projects/CS307/Lab9/lab-09-notebook.html"
@@ -40,7 +40,7 @@ const projects = [
         description: "Analysis of video game sales and ratings data, with interactive visualizations.",
         tags: ["Undergraduate", "Data Analysis", "Data Visualization", "Data Preprocessing", "Tableau"],
         // link: "projectDisplay.html?name=Video%20Game%20Visualizations&file=projects/CS416NarViz/CS416NarViz-A.html"
-        link: "projectDisplay.html?name=Video%20Game%20Visualization&file=projects/VidGameTableau.html"
+        link: "projectDisplay.html?name=Video%20Game%20Visualizations&file=projects/VidGameTableau.html"
     },
     // {
     //     name: "Temperature Model",
