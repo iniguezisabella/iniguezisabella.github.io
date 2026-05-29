@@ -40,12 +40,12 @@ const projects = [
         description: "Analysis of video game sales and ratings data, with interactive visualizations.",
         tags: ["Undergraduate", "Data Analysis", "Data Visualization", "Data Preprocessing", "Tableau"],
         // link: "projectDisplay.html?name=Video%20Game%20Visualizations&file=projects/CS416NarViz/CS416NarViz-A.html"
-        link: "projectDisplay.html?name=Video%20Game%20Visualizations&file=projects/VidGameTableau.html"
+        link: "projectDisplay.html?name=Video%20Game%20Visualization&file=projects/VidGameTableau.html"
     },
     {
         name: "Fashion-MNIST Multi-Class Classification",
         image: "assets/images/proj_ims/CS598_PSL_IMG.png",
-        summary: "<ul><li> In this final project, I was tasked to use the Kaggle Fashion MNIST data set to perform multi-class classification to predict the class label in the testing data. Outside of some general expectations, the project was entirely self navigated. </li><li> I achieved a 97% grade in this final project, with the only dock in points being I could have added more details to my descriptions overall. </li><li> Dataset available via Kaggle: <a href=\"https://www.kaggle.com/datasets/zalando-research/fashionmnist\">Fashion-MNIST Dataset</a> </li></ul>",        
+        summary: "<ul><li> In this final project, I was tasked to use the Kaggle Fashion MNIST data set to perform multi-class classification to predict the class label in the testing data. Outside of some general expectations, the project was entirely self navigated. </li><li> The best model resulted in a classification error of 0.1469, with an overall classification error of 0.2074. </li><li> I achieved a 97% grade in this final project, with the only dock in points being I could have added more details to my descriptions overall. </li><li> Dataset available via Kaggle: <a href=\"https://www.kaggle.com/datasets/zalando-research/fashionmnist\">Fashion-MNIST Dataset</a> </li></ul>",   
         description: "Multi-class classification of fashion items from the Fashion-MNIST dataset.",
         tags: ["Graduate", "Data Analysis", "R", "Data Visualization", "Data Science", "Machine Learning", "Data Preprocessing", "Unsupervised Learning", "Multi-class Classification", "K-Means Clustering", "Hierarchical Clustering", "Principal Component Analysis", "Decision Tree", "Random Forest", "Gradient Boosting Machine (GBM)", "XGBoost"],
         link: "projectDisplay.html?name=Fashion-MNIST%20Multi-Class%20Classification&file=projects/CS598_PSL/CS598_PSL.pdf"
