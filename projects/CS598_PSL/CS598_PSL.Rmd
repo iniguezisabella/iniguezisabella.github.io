@@ -1,0 +1,385 @@
+---
+title: "Project 4: Fashion-MNIST Data"
+author: "Isabella Iniguez"
+date: "2025-12-14"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Introduction
+
+The main goal of this project is to do multi-class classification to predict the class label in the Kaggle Fashion MNIST testing data. 
+
+The dataset can be downloaded from the following link: [Kaggle Link](https://www.kaggle.com/datasets/zalando-research/fashionmnist)
+
+## 0. Data Pre-Processing
+
+```{r include=FALSE}
+library(readr)
+
+fashion_mnist_train = read_csv("/Users/isabellainiguez/Downloads/Documents/College/Classes/CS598_PSL/Proj4/fashion-mnist_train.csv")
+
+fashion_mnist_test = read_csv("/Users/isabellainiguez/Downloads/Documents/College/Classes/CS598_PSL/Proj4/fashion-mnist_test.csv")
+```
+
+Given the size of the data sets, I performed PCA to reduce dimensionality. Arbitrarily, I choose to use the top 100 components.
+
+```{r include=FALSE}
+Y.train = fashion_mnist_train[, 1]
+X.train = as.matrix(fashion_mnist_train[, -1])
+Y.test = fashion_mnist_test[, 1]
+X.test = as.matrix(fashion_mnist_test[, -1])
+
+Sigma = cov(X.train)
+dig.eigen = eigen(Sigma)
+
+k = 100 # the top k components
+PCA.dir = dig.eigen$vectors[, 1:k]
+
+newX.train = X.train %*% PCA.dir
+newX.test = X.test %*% PCA.dir
+
+# dim(newX.train)
+```
+
+Given the limitations of my laptop's power, I would also need to take a sample of the training data in order to further reduce dimensionality. To maintain the even representation of each label (as will be shown in Part 1), I used stratified sampling.
+
+```{r include=FALSE}
+set.seed(598)
+
+# sampling
+indices_by_class = split(seq_along(Y.train[[1]]), Y.train[[1]])
+sample_indices = unlist(lapply(indices_by_class, function(idx) {
+  sample(idx, size = length(idx) * 0.1) # each label is 0.1
+}))
+
+X.subtrain = newX.train[sample_indices, ]
+Y.subtrain = Y.train[sample_indices, ]
+
+# verify sampling
+# counts = table(Y.subtrain)
+# probs = prop.table(counts) * 100
+# report = cbind(Count = counts, Percentage = round(probs, 2))
+
+# print(report)
+```
+
+Finally, I scaled both the training and test data, as the coming uses of the data are sensitive to scaling.
+
+```{r include=FALSE}
+# scale the training data
+X.subtrain_scaled = scale(X.subtrain)
+
+# training params
+train_means = colMeans(X.subtrain)
+train_sds = apply(X.subtrain, 2, sd)
+
+# scale test data the SAME as train
+newX.test_scaled = scale(newX.test, center = train_means, scale = train_sds)
+newX.test_df = as.data.frame(newX.test_scaled)
+```
+
+Now that the data can be more easily processed, we can continue.
+
+## 1. Data Processing and Unsupervised Learning
+
+**(a) Compute and report a frequency table of the outcome variable in both training and testing data.**
+
+Training Frequency Table:
+
+```{r echo=FALSE}
+# fashion_mnist_train
+
+counts = table(Y.train)
+probs = prop.table(counts) * 100
+report = cbind(Count = counts, Percentage = round(probs, 2))
+
+print(report)
+```
+Test Frequency Table:
+
+```{r echo=FALSE}
+# fashion_mnist_test
+
+counts = table(Y.test)
+probs = prop.table(counts) * 100
+report = cbind(Count = counts, Percentage = round(probs, 2))
+
+print(report)
+```
+
+We see that both the original train and test data sets have an equal distribution of each label, taking up 10% of the observations. This means that we have ideal, equal representation of each label when it comes to training and testing our model. Though we will proceed with a portion of the training data, we maintained this distribution in the stratified sampling to adequately represent the original data set.
+
+**(b) Perform two clustering algorithms to the training data. Comment on the resulting clusters.**
+
+The two clustering algorithms I'll be using is K-Means Clustering and Hierarchical Clustering.
+
+First, I'll find the Gap Statistic to determine the optimal number of clusters for the two algorithms to use. 
+
+```{r echo=FALSE, message=FALSE}
+# Gap Statistic for X.subtrain
+library(cluster)
+set.seed(598)
+
+gap_stat = clusGap(X.subtrain_scaled, 
+                   FUN = kmeans, 
+                   nstart = 10, # 25
+                   K.max = 20, # try with 10?
+                   B = 20, # 50
+                   iter.max = 100, # was 500
+                   verbose = TRUE,
+                   algorithm = "MacQueen"  #to stop Quick-TRANSfer warning?
+                   )
+
+# plot for visual
+plot(gap_stat, main = "Gap Statistic Plot")
+```
+
+```{r include=FALSE}
+# first K where its gap statistic exceeds that of K+1
+# k_gap = which(diff(as.matrix(gap_stat$Tab)[,3]) < 0)[1] # k=1
+
+# K where max gap statistic
+k_gap = which.max(as.matrix(gap_stat$Tab)[,3])
+```
+
+Since the first instance where the Kth gap statistic exceeds that of K+1 is k=1, we will instead look to the alternate definition of the optimal gap statistic: the highest gap statistic. This is because using k=1 would result in the clustering algorithms simply creating a singular cluster with all the data points, which wont really provide any valuable information regarding dominating labels since the label distribution would just be even.
+
+The resulting Gap Statistic would then be `r k_gap`.
+
+We can then train the two clustering algorithms with this k_gap.
+
+1. K-Means Clustering
+
+The dominating labels in each of the K-means clusters is as shown.
+
+```{r include=FALSE}
+# K-Means
+km_gap = kmeans(X.subtrain_scaled, centers = k_gap, nstart = 100, iter.max = 50)
+```
+
+```{r echo=FALSE}
+# get the raw counts
+cluster_table = table(Cluster = km_gap$cluster, Label = Y.subtrain[[1]])
+# print(cluster_table)
+
+# for each row (cluster) get most common label
+dominating_labels = colnames(cluster_table)[apply(cluster_table, 1, which.max)]
+
+# clean summary dataframe
+cluster_summary = data.frame(
+  # Cluster = 1:length(dominating_labels),
+  Dominating_Label = dominating_labels,
+  Count = apply(cluster_table, 1, max)
+)
+
+print(cluster_summary)
+```
+
+The K-Means clusters do somewhat help separate the labels since for each label there is at least one cluster where it is the dominating label.
+
+2. Hierarchical Clustering:
+
+The dominating labels in each of the hierarchical clusters is as shown.
+
+```{r include=FALSE}
+hcfit = hclust(dist(X.subtrain_scaled), method = "complete")
+
+# cut dendrogram into ks clusters
+gap_clusters = cutree(hcfit, k = k_gap)
+```
+
+```{r echo=FALSE}
+# get the raw counts
+cluster_table = table(Cluster = gap_clusters, Label = Y.subtrain[[1]])
+# print(cluster_table)
+
+# for each row (cluster) get most common label
+dominating_labels = colnames(cluster_table)[apply(cluster_table, 1, which.max)]
+
+# clean summary dataframe
+cluster_summary = data.frame(
+  # Cluster = 1:length(dominating_labels),
+  Dominating_Label = dominating_labels,
+  Count = apply(cluster_table, 1, max)
+)
+
+print(cluster_summary)
+```
+
+The hierarchical clusters don't help separate the labels since not every label is dominating at least one cluster. Labels 4 and 7 (representing Coats and Sneakers) don't dominate any cluster.
+
+## 2. Multi-class Classification Model
+
+Here, I used four of the methods we discussed in class to do multi-class classification: Decision Tree, Random forest, GBM, and XGBoost Models.
+
+**1. Decision Tree**
+
+I decided to start with a pruned decision tree model. I primarily chose to prune to help reduce overfitting. We are working with a fraction of the available training data, thus I am concerned with the model struggling to generalize to a wider variety of data. The rest of the parameters were left to their defaults.
+
+```{r include=FALSE}
+library(rpart)
+
+# train tree model
+train_bind = cbind(Y.subtrain, X.subtrain_scaled)
+tree.fashion = rpart(as.factor(label)~., data = train_bind)
+
+# optimal CP
+optimal_cp = tree.fashion$cptable[which.min(tree.fashion$cptable[,"xerror"]),"CP"]
+
+# prune the tree
+pruned_tree = prune(tree.fashion, cp = optimal_cp)
+
+# rename testing columns to match the tree model
+colnames(newX.test_df) = gsub("`", "", attr(tree.fashion$terms, "term.labels"))
+
+# get classification error
+Y.predicted = predict(pruned_tree, newX.test_df, type = "class")
+tree_test_err = mean(as.character(Y.test[[1]]) != as.character(Y.predicted))
+
+print(paste("Misclassification Error Rate:", round(tree_test_err, 4))) # 0.72
+```
+
+```{r echo=FALSE}
+library(ggplot2)
+
+tree_test_cm = table(Predicted = Y.predicted, Actual = Y.test[[1]])
+cm_df = as.data.frame(tree_test_cm)
+gg_plot = ggplot(cm_df, aes(x = Predicted, y = Actual, fill = Freq)) +
+  geom_tile(color = "black") +
+  geom_text(aes(label = Freq), vjust = 1, color = "white", size = 4) +
+  labs(title = "Decision Tree Confusion Matrix", x = "Predicted Label", y = "Actual Label")
+gg_plot
+```
+
+The tree model resulted in a classification error of `r tree_test_err`. From the heatmap, it appears as if it struggles to predict Shirts (6) the most, misclassifying shirts as Coats (4), Pullovers (2), or T-shirt/tops (0). This isn’t surprising since we know shirts to be visually similar to these other items, thus they are likely to be confused for one of them given the limitations of a single tree. Otherwise, the model does perform fairly well.
+
+**2. Random Forest**
+
+To improve from a single decision tree, I decided to try a random forest model. I choose to use a safe 1000 decision trees. Wanting to mitigate the computation time, I used conservative estimates for the rest of the parameters, possibly reducing the overall model's predictive power (mtry = 7, nodesize = 10, sampsize = 800). However, compared to the following models trained in this project, the model's performance is fairly consistent.
+
+```{r include=FALSE}
+library(randomForest)
+
+rf.fit = randomForest(X.subtrain_scaled,
+                      as.factor(Y.subtrain[[1]]), 
+                      ntree = 1000, mtry = 7, 
+                      nodesize = 10, sampsize = 800)
+
+# get classification error
+Y.predicted = predict(rf.fit, newX.test_df, type = "class")
+forest_test_err = mean(as.character(Y.test[[1]]) != as.character(Y.predicted))
+
+print(paste("Misclassification Error Rate:", round(forest_test_err, 4)))
+
+```
+
+```{r echo=FALSE}
+forest_test_cm = table(Predicted = Y.predicted, Actual = Y.test[[1]])
+cm_df = as.data.frame(forest_test_cm)
+gg_plot = ggplot(cm_df, aes(x = Predicted, y = Actual, fill = Freq)) +
+  geom_tile(color = "black") +
+  geom_text(aes(label = Freq), vjust = 1, color = "white", size = 4) +
+  labs(title = "Random Forest Confusion Matrix", x = "Predicted Label", y = "Actual Label")
+gg_plot
+```
+
+The random forest model resulted in a classification error of `r forest_test_err`. As with the random tree model, it also appears to struggle the most with predicting Shirts (6). As expected, the random forest performs better than the single tree model.
+
+**3. GBM**
+
+Moving onto a GBM model, I kept the 1000 decision trees but set the remaining parameters to their default values and adjusted by eye. I wanted a fair interaction depth given we are analyzing images, so I choose 5.
+
+```{r include=FALSE}
+# GBM
+library(gbm)
+
+train_bind = cbind(Y.subtrain, X.subtrain_scaled)
+gbm.fit = gbm(label~., data = train_bind, 
+              distribution = "multinomial", n.trees = 1000,
+              shrinkage = 0.1, bag.fraction = 0.8, 
+              interaction.depth = 5)
+
+Y.predicted_arr = predict(gbm.fit, newX.test_df)
+Y.predicted = max.col(Y.predicted_arr[, , 1])- 1
+gbm_test_err = mean(as.character(Y.test[[1]]) != as.character(Y.predicted))
+
+print(paste("Misclassification Error Rate:", round(gbm_test_err, 4)))
+```
+
+```{r echo=FALSE}
+gbm_test_cm = table(Predicted = Y.predicted, Actual = Y.test[[1]])
+cm_df = as.data.frame(gbm_test_cm)
+gg_plot = ggplot(cm_df, aes(x = Predicted, y = Actual, fill = Freq)) +
+  geom_tile(color = "black") +
+  geom_text(aes(label = Freq), vjust = 1, color = "white", size = 4) +
+  labs(title = "GBM Confusion Matrix", x = "Predicted Label", y = "Actual Label")
+gg_plot
+```
+
+The GBM model resulted in a classification error of `r gbm_test_err`. As with the previous models, it also struggles the most with predicting Shirts (6).
+
+**4. XGBoost**
+
+Then finally the XGBoost model, I similarly tuned the parameters by eye.
+
+```{r include=FALSE}
+# XGBoost
+
+dtrain = xgboost::xgb.DMatrix(data.matrix(X.subtrain_scaled), label = data.matrix(Y.subtrain)[,"label"])
+dvalid = xgboost::xgb.DMatrix(data.matrix(newX.test_scaled), label = data.matrix(Y.test)[,"label"])
+
+params = list(
+  objective = "multi:softmax", # objective = "reg:squarederror",
+  num_class = 10,
+  eval_metric = "merror", # Multiclass classif error rate
+  eta = 0.05, # shrinkage
+  max_depth = 4, # tree depth
+  subsample = 0.8, # row subsampling
+  colsample_bytree = 0.8, # column subsampling
+  min_child_weight = 5, # node min hessian-weighted size
+  lambda = 1.0, # L2 on leaf weights
+  alpha = 0 # L1 on leaf weights (optional)
+)
+
+watch = list(train = dtrain, valid = dvalid)
+
+xgb_fit = xgboost::xgb.train(
+  params = params,
+  data = dtrain,
+  nrounds = 3000,
+  watchlist = watch,
+  early_stopping_rounds = 50,
+  verbose = 0
+)
+
+Y.predicted = predict(xgb_fit, dvalid) # predict(xgb_fit, X.test2)$class
+xgb_test_err = sum(Y.test != Y.predicted)/nrow(Y.test)
+print(paste("Misclassification Error Rate:", round(xgb_test_err, 4)))
+```
+
+```{r echo=FALSE}
+xgb_test_cm = table(Predicted = Y.predicted, Actual = Y.test[[1]])
+
+cm_df = as.data.frame(xgb_test_cm)
+gg_plot = ggplot(cm_df, aes(x = Predicted, y = Actual, fill = Freq)) +
+  geom_tile(color = "black") +
+  geom_text(aes(label = Freq), vjust = 1, color = "white", size = 4) +
+  labs(title = "XGBoost Confusion Matrix", x = "Predicted Label", y = "Actual Label")
+gg_plot
+```
+
+The XGBoost model resulted in a classification error of `r xgb_test_err`. As with the previous models, it also struggles the most with predicting Shirts (6), though it appears to have performed the best overall.
+
+**Report the overall classification error.**
+
+```{r include=FALSE}
+overall_test_err = mean(c(tree_test_err, forest_test_err, gbm_test_err, xgb_test_err))
+overall_test_err
+```
+
+The overall classification error is `r overall_test_err`.
+
