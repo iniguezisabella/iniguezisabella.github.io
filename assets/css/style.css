@@ -129,18 +129,19 @@ main a {
 }
 
 /* footer bar styling */
-footer {
-    background: #181818;
+/* footer { */
+    /* background: #181818;
     color: #fff;
     text-align: center;
     padding: 1rem;
     position: bottom;
-    bottom: 0;
+    bottom: 0; */
+
     /* position: fixed;  */
     /* bottom: 0;  */
     /* left: 0;  */
     /* right: 0; */
-}
+/* } */
 
 /* project page styling */
 #tag-search-container {
