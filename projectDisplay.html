@@ -27,13 +27,19 @@
         </nav>
     </header>
 
+    <!-- project title -->
     <section class="about">
-        <h1 id="project-title"></h1>
-        <div id="project-summary">
+        <h1 class="about-content" id="project-title"></h1>
+    </section>
+
+    <!-- project summary -->
+    <section class="about">
+        <div class="about-content" id="project-summary">
             <!-- Brief summary will be inserted here -->
         </div> 
     </section>
 
+    <!-- project content (iframe) -->
     <section class="about">
         <div id="project-content">
             <!-- Project HTML will be loaded here -->
@@ -43,70 +49,53 @@
     <script src="assets/js/projectsData.js"></script>
 
     <script>
-    // Get query parameters
-    const params = new URLSearchParams(window.location.search);
-    const name = params.get('name') || 'Project';
-    const file = params.get('file');
+    const projectName = new URLSearchParams(window.location.search).get("name");
+    const project = projectData.find((item) => item.name === projectName);
+    const title = document.getElementById("project-title");
+    const summary = document.getElementById("project-summary");
+    const content = document.getElementById("project-content");
 
-    // Set project name
-    document.getElementById('project-title').textContent = name;
-
-    // Helper to set summary text
-    function setSummary(text) {
-        const summaryDiv = document.getElementById('project-summary');
-        if (!text) {
-            summaryDiv.style.display = 'none';
-            return;
-        }
-        summaryDiv.style.display = 'block';
-        // Assume text is safe HTML (no escaping needed)
-        // summaryDiv.innerHTML = `<h1>Summary</h1>${text}`;
-        summaryDiv.innerHTML = `<div class="greeting">Summary: ${text}!</div>`;
-    }
-
-    // Determine summary from (1) URL param, (2) projectsData.js, (3) fetched project file
-    let summaryFound = false;
-    const summaryParam = params.get('summary');
-    if (summaryParam) {
-        setSummary(decodeURIComponent(summaryParam));
-        summaryFound = true;
-    } else if (typeof projects !== 'undefined') {
-        // Try to find project by name in projectsData
-        const proj = projects.find(p => p.name === name || decodeURIComponent(p.name) === name);
-        if (proj && proj.summary) {
-            setSummary(proj.summary);
-            summaryFound = true;
-        }
-    }
-
-    // Load project HTML if file param exists
-    if (file) {
-        // If no explicit or data-driven summary, attempt to fetch the project file and extract a first paragraph
-        if (!summaryFound) {
-            fetch(file).then(resp => {
-                if (!resp.ok) throw new Error('Fetch failed');
-                return resp.text();
-            }).then(htmlText => {
-                try {
-                    const parser = new DOMParser();
-                    const doc = parser.parseFromString(htmlText, 'text/html');
-                    const descEl = doc.querySelector('.project-desc') || doc.querySelector('p');
-                    const text = descEl ? descEl.textContent.trim() : '';
-                    setSummary(text);
-                } catch (e) {
-                    setSummary('');
-                }
-            }).catch(() => setSummary(''));
-        }
-
-        const iframe = document.createElement('iframe');
-        iframe.src = file;
-        iframe.width = "100%";
-        iframe.height = "600";
-        iframe.style.border = "none";
-        document.getElementById('project-content').appendChild(iframe);
+    if (!project) {
+        title.textContent = "Project not found";
+        summary.hidden = true;
+        content.textContent = "The requested project could not be found.";
     } else {
-        document.getElementById('project-content').textContent = "No project file specified.";
+        // Set the document title and main title
+        document.title = `${project.name} | Iniguez Portfolio`; // tab title
+        // similar as in projectsData.js
+        const titleText = document.createElement("span");
+        titleText.textContent = project.name;
+        title.appendChild(titleText);
+
+        // Insert the summary if it exists
+        if (project.summary) {
+            // const summaryTitle = document.createElement("h2");
+            // summaryTitle.textContent = "Summary";
+            // summary.appendChild(summaryTitle);
+
+            const summaryText = document.createElement("p");
+            summaryText.classList.add("about-content");
+            summaryText.insertAdjacentHTML("beforeend", project.summary);
+            summary.appendChild(summaryText);
+
+            // summary.insertAdjacentHTML("beforeend", project.summary);
+        } else {
+            summary.hidden = true;
+        }
+
+        // Insert the project content (html file) if it exists
+        if (project.file) {
+            const iframe = document.createElement("iframe");
+            iframe.src = project.file;
+            iframe.title = `${project.name} project content`;
+            // iframe.width = "100%";
+            iframe.width = "600";
+            iframe.height = "750";
+            iframe.style.border = "none";
+            content.appendChild(iframe);
+        } else {
+                content.textContent = "Project content is unavailable.";
+        }
     }
     </script>
 </body>

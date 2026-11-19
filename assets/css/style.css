@@ -217,6 +217,15 @@ span{
     transition: 0.2s linear;
 }
 
+.project-img img{
+    position: relative;
+    width: 32vw;
+    border-radius: 10%;
+    box-shadow: 0 0 25px solid #b5e853;
+    cursor: pointer;
+    transition: 0.2s linear;
+}
+
 .social-icons a{
     display: inline-flex;
     justify-content: center;
