@@ -28,13 +28,16 @@ body{
 }
 
 header{
-    margin-top: 20px;
+    margin-top: 20px; /* margin-top: 0px; */
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
-    padding: 1rem 9%;
-    background-color: transparent;
+    padding: 1rem 9% 1rem 9%;
+    /* background-color: transparent; */
+    background-color: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(5px);
+    /* outline: 0.1rem solid rgba(255, 0, 0, 1); */
     filter: drop-shadow(10px);
     display: flex;
     justify-content: space-between;

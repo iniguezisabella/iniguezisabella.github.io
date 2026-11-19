@@ -1,5 +1,5 @@
-// Projects metadata - consumed by projectsFilter.js and projectDisplay.html
-const projects = [
+// Projects metadata - consumed by projectDisplay.html
+const projectData = [
     {
         name: "Wine Quality Predictor",
         image: "assets/images/proj_ims/WineQualPredMod_IMG.png",
@@ -89,3 +89,45 @@ const projects = [
     // },
     
 ];
+
+// Populate sections dynamically
+const container = document.getElementById("sections-container");
+
+projectData.forEach((item) => {
+    // Create the new section element
+    const section = document.createElement("section");
+    section.classList.add("about");
+
+    // Create first child div for image
+    const div1 = document.createElement("div");
+    div1.classList.add("about-img");
+
+    const img = document.createElement("img");
+    img.addEventListener("click", () => {
+        // on click, redirect to the project link
+        window.location.href = item.link;
+    });
+    img.src = item.image;
+    img.alt = item.name;
+    div1.appendChild(img);
+
+    // Create second child div for content
+    const div2 = document.createElement("div");
+    div2.classList.add("about-content");
+
+    const heading = document.createElement("h1");
+    const headingText = document.createElement("span");
+    headingText.textContent = item.name;
+    heading.appendChild(headingText);
+    
+    const paragraph = document.createElement("p");
+    paragraph.textContent = item.description;
+    div2.appendChild(heading);
+    div2.appendChild(paragraph);
+
+    // Append divs to the main section
+    section.appendChild(div1);
+    section.appendChild(div2);
+    
+    container.appendChild(section);
+});

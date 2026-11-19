@@ -29,13 +29,13 @@
 
     <section class="about">
         <h1 id="project-title"></h1>
-        <div id="project-summary" class="main-left">
+        <div id="project-summary">
             <!-- Brief summary will be inserted here -->
         </div> 
     </section>
 
     <section class="about">
-        <div class="about-content" id="project-content">
+        <div id="project-content">
             <!-- Project HTML will be loaded here -->
         </div>
     </section>
@@ -60,7 +60,8 @@
         }
         summaryDiv.style.display = 'block';
         // Assume text is safe HTML (no escaping needed)
-        summaryDiv.innerHTML = `<h1>Summary</h1>${text}`;
+        // summaryDiv.innerHTML = `<h1>Summary</h1>${text}`;
+        summaryDiv.innerHTML = `<div class="greeting">Summary: ${text}!</div>`;
     }
 
     // Determine summary from (1) URL param, (2) projectsData.js, (3) fetched project file
